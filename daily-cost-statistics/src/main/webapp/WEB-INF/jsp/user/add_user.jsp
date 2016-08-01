@@ -16,7 +16,7 @@
 <body>
 <!-- Left column -->
 <div class="templatemo-flex-row">
-    <%@ include file="../../common/left.jsp"%>
+    <%--<%@ include file="../../common/left.jsp"%>--%>
     <!-- Main content -->
     <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-content-container">
@@ -81,7 +81,7 @@
                         <input type="button" id="resetButton" value="返回" class="templatemo-white-button"/>
                     </div>
             </div>
-            <%@ include file="../../common/footer.jsp"%>
+            <%--<%@ include file="../../common/footer.jsp"%>--%>
         </div>
     </div>
 </div>

@@ -87,9 +87,9 @@
         </div>
     </form>
 </div>
-<%--<div class="templatemo-content-widget templatemo-login-widget templatemo-register-widget white-bg">--%>
-    <%--<p>还没有账号？ <strong><a href="${ctx}/user/toAdd" class="blue-text">马上注册!</a></strong></p>--%>
-<%--</div>--%>
+<div class="templatemo-content-widget templatemo-login-widget templatemo-register-widget white-bg">
+    <p>还没有账号？ <strong><a href="${ctx}/user/toAdd" class="blue-text">马上注册!</a></strong></p>
+</div>
 
 </body>
 </html>

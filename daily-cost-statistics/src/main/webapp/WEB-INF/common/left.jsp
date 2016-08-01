@@ -25,6 +25,9 @@
             <li>
                     <a href="${ctx}/main/index" class="first-menu-index"><i class="fa fa-home fa-fw"></i>首页</a>
             </li>
+            <li>
+                <a href="${ctx}/cost/toCostList" class="first-menu-index"><i class="fa fa-home fa-fw"></i>消费</a>
+            </li>
             <li class="first-menu">
                 <a href="${ctx}/ps/toStatistics?type=count" class="first-menu-chart"><i class="fa fa-bar-chart fa-fw"></i>统计图表</a>
                 <ul class="second-menu-ul" >

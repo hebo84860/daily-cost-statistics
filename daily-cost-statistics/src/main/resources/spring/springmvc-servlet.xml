@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+            http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+            http://www.springframework.org/schema/context  
+            http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+            http://www.springframework.org/schema/tx  
+            http://www.springframework.org/schema/tx/spring-tx-4.0.xsd  
+            http://www.springframework.org/schema/jdbc  
+            http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd 
+            http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<context:component-scan base-package="com.yeapoo.statistics"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Component" />
+	</context:component-scan>
+
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="false">
+			<bean
+				class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
+			<bean
+				class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+			<bean
+				class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter" />
+			<bean
+				class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+			<bean
+				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+						<value>application/*+json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+
+	<!-- Default ViewResolver -->
+	<bean id="ViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+	</bean>
+
+	<mvc:resources mapping="/static/**" location="/static/"/>
+
+	<bean id="propertyConfigurer2" class="com.yeapoo.statistics.util.PropertyConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations">
+			<list>
+				<value>classpath:/maven_properties/01_dev.properties</value>
+				<!--<value>file:/data/etc/common/*.properties</value>
+				<value>file:/data/etc/projects/${project.name}.properties</value>-->
+			</list>
+		</property>
+	</bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/ps/*"/>
+			<mvc:mapping path="/main/*"/>
+			<mvc:mapping path="/user/*"/>
+			<mvc:exclude-mapping path="/main/login"/>
+			<bean class="com.yeapoo.statistics.intercept.LoginInterceptor">
+				<property name="loginUrl" value="../main/login"/>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:view-controller path="/" view-name="redirect:main/index"/>
+
+	<!--<bean id="audience" class="com.yeapoo.stattistics.intercept.Audience" />
+	<aop:config>
+		<aop:aspect ref="audience">
+			<aop:pointcut id="performance" expression="execution(* com.yeapoo.stattistics.controller.*.*(..))" />
+			&lt;!&ndash;<aop:before pointcut-ref="performance" method="before" />
+			<aop:after pointcut-ref="performance" method="after"/>
+			&lt;!&ndash; <aop:around pointcut-ref="performance" method="around"/>  &ndash;&gt;
+			<aop:after-throwing pointcut-ref="performance" method="afterException"/>&ndash;&gt;
+		</aop:aspect>
+	</aop:config>-->
+
+</beans>

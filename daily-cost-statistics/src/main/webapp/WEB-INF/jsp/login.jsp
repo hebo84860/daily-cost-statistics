@@ -58,7 +58,7 @@
 <div class="templatemo-content-widget templatemo-login-widget white-bg">
     <header class="text-center">
         <%--<div class="square"></div>--%>
-        <h1>项目统计</h1>
+        <h1>消费统计</h1>
     </header>
     <div id="login-error" style="color: red;text-align:center;">${error}</div>
     <form action="${ctx}/main/login" id="login" method="post" class="templatemo-login-form">

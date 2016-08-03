@@ -3,7 +3,7 @@
 <div class="templatemo-sidebar">
     <header class="templatemo-site-header">
         <div class="square"></div>
-        <h1>P2P数据统计</h1>
+        <h1>消费统计</h1>
     </header>
     <%--<div class="profile-photo-container">--%>
         <%--<img src="" alt="Profile Photo" class="img-responsive">--%>

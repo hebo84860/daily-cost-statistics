@@ -84,7 +84,7 @@ public class CostDetailHandler implements TypeHandler<CostDetail> {
             }
         }
         logger.debug("快递枚举类型值：" + code);
-        return CostDetail.NULL;
+        return null;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.yeapoo.statistics.controller.base;
 
+import com.yeapoo.statistics.constant.CodeEnum;
+
 import java.io.Serializable;
 
 /**
@@ -20,7 +22,7 @@ public class BaseResponse implements Serializable{
     /**
      * 状态码
      */
-    private String code;
+    private CodeEnum code = CodeEnum.SUCCESS;
 
     public boolean isStatus() {
         return status;
@@ -38,11 +40,14 @@ public class BaseResponse implements Serializable{
         this.message = message;
     }
 
-    public String getCode() {
+    public CodeEnum getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(CodeEnum code) {
+        if (code !=null && !code.equals(CodeEnum.SUCCESS)) {
+            this.setStatus(false);
+        }
         this.code = code;
     }
 }

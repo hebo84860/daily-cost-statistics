@@ -31,6 +31,7 @@
                         <%--<label for="username">当前用户名称</label>--%>
                             <span>消费详情：</span>
                             <select id="costDetail" style="width:170px">
+                                <option value="" selected>全部</option>
                                 <c:forEach items="${costDetailEnum}" var="item">
                                     <option value="${item.code}">${item.cnName}</option>
                                 </c:forEach>

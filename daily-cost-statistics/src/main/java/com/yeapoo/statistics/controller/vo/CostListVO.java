@@ -25,6 +25,11 @@ public class CostListVO implements Serializable {
     private String createTimeStr;
     private String updateTimeStr;
 
+    public CostListVO(){}
+    public CostListVO( CostEntity costEntity){
+        this.costEntity = costEntity;
+    }
+
     public CostEntity getCostEntity() {
         return costEntity;
     }

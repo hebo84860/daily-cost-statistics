@@ -8,7 +8,6 @@ import org.springframework.util.StringUtils;
  */
 public enum CostDetail {
 
-    NULL("",""),
     FOOD("1","饮食"),
     AMUSEMENT("2","娱乐"),
     SHOPPING("3","购物"),

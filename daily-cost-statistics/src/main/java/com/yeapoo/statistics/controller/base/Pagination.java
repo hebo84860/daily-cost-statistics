@@ -38,6 +38,8 @@ public class Pagination implements Serializable{
 
     private boolean search = false;
 
+    private int stratRecodes = 0;
+
     public Pagination() {
     }
     
@@ -163,6 +165,14 @@ public class Pagination implements Serializable{
     		this.page = 1;
     	}
     	this.search = search;
+    }
+
+    public int getStratRecodes() {
+        return (page-1) * rows;
+    }
+
+    public void setStratRecodes(int stratRecodes) {
+        this.stratRecodes = stratRecodes;
     }
 
     @Override

@@ -36,6 +36,14 @@
                                     <option value="${item.code}">${item.cnName}</option>
                                 </c:forEach>
                             </select>
+                            <span>消费类型：</span>
+                            <select id="costType" style="width:170px">
+                                <option value="" selected>全部</option>
+                                <c:forEach items="${costTypeEnum}" var="item">
+                                    <option value="${item}">${item.cnName}</option>
+                                </c:forEach>
+                            </select>
+
                     </div>
                     <div class="col-lg-6 col-md-6 form-group">
                         <div class="form-group text-right">

@@ -93,11 +93,11 @@ function initGrid() {
             total:'pagination.total',       // json中代表页码总数的数据
             repeatitems : false             // 如果设为false，则jqGrid在解析json时，会根据name来搜索对应的数据元素（即可以json中元素可以不按顺序）；而所使用的name是来自于colModel中的name设定。
         },
-        //onPaging : function(pgButton) {
-        //    $("#distributionList").jqGrid('setGridParam', {
-        //        //postData : getDistributionRuleListParams()
-        //    });
-        //},
+        onPaging : function(pgButton) {
+            $("#distributionList").jqGrid('setGridParam', {
+                postData : getCostListParams()
+            });
+        },
         gridComplete:function(){  //在此事件中循环为每一行添加
         //    var ids=jQuery("#costList").jqGrid('getDataIDs');
         //    var operateClick;
@@ -121,4 +121,9 @@ function initGrid() {
         //    }
         }
     });
+}
+
+function getCostListParams(){
+    var params = {};
+    //param
 }

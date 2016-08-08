@@ -9,7 +9,7 @@
     <link href="${ctx}/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="${ctx}/static/css/templatemo-style.css" rel="stylesheet">
     <link href="${ctx}/static/css/index.css" rel="stylesheet">
-    <%--<link type="text/css" rel="stylesheet" href="${ctx}/js/resources/jquery-ui-1.8.11/css/redmond/jquery-ui-1.8.11.css"/>--%>
+    <%--<link type="text/css" rel="stylesheet" href="${ctx}/static/js/jquery-ui-1.8.11/css/redmond/jquery-ui-1.8.11.css"/>--%>
     <link type="text/css" rel="stylesheet" href="${ctx}/static/jqGrid/css/ui.jqgrid.css"/>
 
     <script src="${ctx}/static/js/jquery/jquery.js" type="text/javascript"></script>
@@ -33,7 +33,7 @@
                             <select id="costDetail" style="width:170px">
                                 <option value="" selected>全部</option>
                                 <c:forEach items="${costDetailEnum}" var="item">
-                                    <option value="${item.code}">${item.cnName}</option>
+                                    <option value="${item}">${item.cnName}</option>
                                 </c:forEach>
                             </select>
                             <span>消费类型：</span>

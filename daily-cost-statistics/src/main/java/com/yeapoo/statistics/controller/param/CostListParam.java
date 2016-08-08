@@ -18,9 +18,9 @@ import java.util.Date;
 public class CostListParam implements Serializable, BaseParam {
     private static final long serialVersionUID = 4899411666660399100L;
 
-    private CostEntity costEntity;
+    private CostEntity costEntity = new CostEntity();
 
-    private Pagination pagination;
+    private Pagination pagination = new Pagination();
 
     public CostEntity getCostEntity() {
         return costEntity;

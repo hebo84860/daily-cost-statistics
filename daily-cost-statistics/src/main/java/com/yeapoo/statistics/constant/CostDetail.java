@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
  * Created by hebo on 2016/8/1.
  */
 public enum CostDetail {
-
+    NULL("",""),
     FOOD("1","饮食"),
     AMUSEMENT("2","娱乐"),
     SHOPPING("3","购物"),

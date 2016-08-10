@@ -1,7 +1,32 @@
 $(document).ready(function() {
     initGrid();
+    $("#searchCostList").off().on().click(function(){
+        queryCostList();
+    });
+    $("#addCost").off().on().click(function(){
+        showAddDiv();
+    });
+
 });
 
+function showAddDiv(id){
+
+    $('#dialogCost').dialog({
+        title: '新增消费记录',
+        width: 600,
+        height: 299,
+        modal: 'true'
+    });
+}
+
+function queryCostList(){
+    $("#costList").jqGrid('setGridParam', {
+        url : "ajaxQueryCostList",
+        datatype : "json",
+        mtype : "POST",
+        postData : getCostListParams()
+    }).trigger("reloadGrid");
+}
 
 function initGrid() {
     $("#costList").jqGrid({
@@ -127,17 +152,8 @@ function initGrid() {
 }
 
 function getCostListParams(){
-    var costListParam = {};
-    var costEntity = {};
-    costEntity["costDetail"] = $("#costDetail").val();
-    costEntity["costType"] = $("#costType").val();
-    costListParam["costEntity"] = costEntity;alert(costListParam.toString());
-    console.info(costListParam);
-    return costListParam;
-    //return {
-    //'costEntity':{
-    //    //'costDetailS' : $("#costDetail").val(),
-    //    'description' : $("#costType").val()
-    //}
-    //}
+    return {
+        'costDetail' : $("#costDetail").val(),
+        'costType' : $("#costType").val()
+    }
 }

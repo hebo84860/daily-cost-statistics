@@ -93,7 +93,7 @@ function initGrid() {
         url : "ajaxQueryCostList",
         datatype : "json",
         mtype : "POST",
-        colNames : ['编号','消费详情','消费金额','消费者','消费时间','消费描述','消费记录状态','消费记录类型','创建时间','创建人',"修改时间","修改人"],
+        colNames : ['编号','消费详情','消费金额','消费者','消费时间','消费描述','消费记录状态','消费记录状态','消费记录类型','创建时间','创建人',"修改时间","修改人","操作"],
         colModel : [
             {
                 name : 'id',
@@ -126,6 +126,12 @@ function initGrid() {
                 index : 'description',
                 align : 'center',
                 sortable : false
+            }, {
+                name : 'status',
+                index : 'status',
+                align : 'center',
+                sortable : false,
+                hidden: true
             },{
                 name : 'statusStr',
                 index : 'statusStr',
@@ -158,6 +164,11 @@ function initGrid() {
                 align : 'center',
                 //hidden : true,
                 sortable:false
+            }, {
+                name : 'operate',
+                index : 'operate',
+                align : 'center',
+                sortable:false
             }
         ],
         rowNum:10,            //每页显示记录数
@@ -182,7 +193,7 @@ function initGrid() {
             repeatitems : false             // 如果设为false，则jqGrid在解析json时，会根据name来搜索对应的数据元素（即可以json中元素可以不按顺序）；而所使用的name是来自于colModel中的name设定。
         },
         onPaging : function(pgButton) {
-            $("#distributionList").jqGrid('setGridParam', {
+            $("#costList").jqGrid('setGridParam', {
                 postData : getCostListParams()
             });
         }
@@ -192,21 +203,21 @@ function initGrid() {
             var operateClick;
             for (var i = 0; i < ids.length; i++) {
                 var id = ids[i];
-                var rowData = $('#distributionList').jqGrid('getRowData', id);
-                var distributionRuleId = rowData['id'];
-                var validStatus = rowData['validStatus'];
-                var validStatusStr = rowData['validStatusStr'];
+                var rowData = $('#costList').jqGrid('getRowData', id);
+                var costId = rowData['id'];
+                var status = rowData['status'];
+                var statusStr = rowData['statusStr'];
                 //显示设为有效/ 无效链接
-                if(validStatusStr=="有效"){
-                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="disableDistribution(' + "'" +
-                        distributionRuleId+ "' ,'" + validStatus + "' ,'" + validStatusStr + "'" + ')" >设为无效</a>'
+                if(statusStr=="有效"){
+                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="disableCost(' + "'" +
+                        costId+ "' ,'" + status + "' ,'" + statusStr + "'" + ')" >设为无效</a>'
                         +" | <a href='javascript:void(0)' onclick='showAddDiv("+id+")' style='color:blue;'>编辑</a>";
                 }else{
-                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="disableDistribution(' + "'" +
-                        distributionRuleId+ "' ,'" + validStatus + "' ,'" + validStatusStr + "'" + ')" >设为有效</a>';
+                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="disableCost(' + "'" +
+                        costId+ "' ,'" + status + "' ,'" + statusStr + "'" + ')" >设为有效</a>';
                 }
 
-                jQuery("#distributionList").jqGrid('setRowData', id, {operate: operateClick});
+                jQuery("#costList").jqGrid('setRowData', id, {operate: operateClick});
             }
         }
     });

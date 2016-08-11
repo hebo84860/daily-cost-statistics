@@ -2,6 +2,7 @@ package com.yeapoo.statistics.controller;
 
 import com.yeapoo.statistics.constant.CodeEnum;
 import com.yeapoo.statistics.constant.ConstantEnum;
+import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.param.UpdatePasswordParam;
 import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.service.IUserService;
@@ -84,8 +85,29 @@ public class UserController {
 			result.put("code", CodeEnum.SYSTEM_ERROR.getCodeInt());
 			result.put("msg", CodeEnum.SYSTEM_ERROR.getValueStr());
 		}
-		logger.info("modify password end result = {}",result);
+		logger.info("modify password end result = {}", result);
 		return  JsonUtil.getJSONString(result);
+	}
+
+	/**
+	 * 验证账号是否重复
+	 * @return
+	 */
+	@RequestMapping("/ajaxValidUserNameRepeat")
+	@ResponseBody
+	public BaseSingleResponse ajaxValidUserNameRepeat(String username){
+		BaseSingleResponse baseSingleResponse = new BaseSingleResponse();
+		try {
+			UserEntity userEntity = userService.getUserEntityByUserName(username);
+			if (userEntity!=null){
+				baseSingleResponse.setCode(CodeEnum.ACCOUNT_EXIST);
+			}
+		} catch (Exception e) {
+			baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
+			e.printStackTrace();
+		}
+
+		return baseSingleResponse;
 	}
 
 	/**
@@ -106,8 +128,8 @@ public class UserController {
 			}
 			UserEntity user = userService.getUserEntityByUserName(paramsMap.get("username").toString());
 			if (user!=null){
-				map.put("code", CodeEnum.ACCOUNT_EXISET.getCodeInt());
-				map.put("msg", CodeEnum.ACCOUNT_EXISET.getValueStr());
+				map.put("code", CodeEnum.ACCOUNT_EXIST.getCodeInt());
+				map.put("msg", CodeEnum.ACCOUNT_EXIST.getValueStr());
 				return map;
 			}
 			UserEntity paramUser = getUserFromMap(paramsMap);

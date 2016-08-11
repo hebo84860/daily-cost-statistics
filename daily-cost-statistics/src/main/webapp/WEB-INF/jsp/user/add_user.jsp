@@ -25,25 +25,26 @@
                 <%--<form action="index.html" class="templatemo-login-form" method="post" enctype="multipart/form-data">--%>
                     <div class="row form-group">
                         <div class="col-lg-6 col-md-6 form-group">
-                            <label for="username">用户名称</label>
-                            <input id="username" type="text" class="form-control span-prompt"  placeholder="John">
+                            <label for="username">账号名称</label>
+                            <input id="username" type="text" class="form-control span-prompt"  >
                             <span class="red-display-none">请填写用户名称</span>
+                            <span class="red-display-none" id="usernameExist">该用户名已经存在，请重新填写！</span>
                         </div>
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="realname">真实姓名</label>
-                            <input type="text" class="form-control span-prompt" id="realname" placeholder="Smith">
+                            <input type="text" class="form-control span-prompt" id="realname">
                             <span class="red-display-none">请填写真实姓名</span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="nickname">用户昵称</label>
-                            <input type="text" class="form-control span-prompt" id="nickname" placeholder="Admin">
+                            <input type="text" class="form-control span-prompt" id="nickname">
                             <span class="red-display-none">请填写用户昵称</span>
                         </div>
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="email">个人邮箱</label>
-                            <input type="text" class="form-control" id="email" placeholder="admin@company.com">
+                            <input type="text" class="form-control" id="email"<%-- placeholder="admin@company.com"--%>>
                         </div>
                     </div>
                     <%--<div class="row form-group">

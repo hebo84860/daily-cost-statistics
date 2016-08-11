@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+    //$("#username").off().on().blur(function(){
+    //    validUsernameRepeat($("#username").val());
+    //});
+
     $("#submitButton").off().on().click(function(){
         ajaxAddUser();
     }) ;
@@ -7,6 +11,9 @@ $(document).ready(function(){
         history.back();
     });
     $(".span-prompt").off().on().blur(function(){
+        if($(this).attr("id")=='username'){
+            validUsernameRepeat($("#username").val());
+        }
         if(!$(this).val()){
             $(this).next("span").show();
         }
@@ -15,6 +22,8 @@ $(document).ready(function(){
         }
     }).focus(function(){
         $(this).next("span").hide();
+        if($(this).attr("id")=='username')
+            $("#usernameExist").hide();
     })
 
 });
@@ -28,23 +37,25 @@ function ajaxAddUser(){
     var password = $("#password").val();
     var email = $("#email").val();
     if(!username){
-        alert('请填写用户名');
+        alert('请填写用户名！');
         return;
     }
     if(!realname){
-        alert('请填写您的姓名');
+        alert('请填写您的姓名！');
         return;
     }
     if(!nickname){
-        alert('请填写用户昵称');
+        alert('请填写用户昵称！');
         return;
     }
     if(!password){
-        alert('请填写用户密码');
+        alert('请填写用户密码！');
         return;
     }
     if(password!=$("#confirmPassword").val()){
-        alert('请填写用户密码');
+        alert('两次密码输入不相同！');
+        $("#confirmPassword").val("");
+        $("#password").val("");
         return;
     }
     paramsJson['username'] = username;
@@ -73,4 +84,23 @@ function ajaxAddUser(){
         }
     } )
 
+}
+
+function validUsernameRepeat(username){
+    if(!username){
+        return false;
+    }
+    $.ajax({
+        url : 'ajaxValidUserNameRepeat',
+        type:'post',
+        dataType : "json",
+        data : {
+            username : username
+        },
+        success: function(data){
+            if(data.status==false && data.code=='ACCOUNT_EXIST'){
+                $("#usernameExist").show();
+            }
+        }
+    });
 }

@@ -10,7 +10,7 @@ public enum CodeEnum {
     SUCCESS(0, "成功"),
     SYSTEM_ERROR(1, "服务器错误，请稍后！"),
     PARAMS_ERROR(2, "参数错误，请重试"),
-    ACCOUNT_EXISET(3, "该用户名已经存在"),
+    ACCOUNT_EXIST(3, "该用户名已经存在"),
     ACCOUNT_ERROR(4, "账号不存在"),
     ACCOUNT_PASSWORD_ERROR(5, "密码错误"),
     SAVE_FAIL(6, "保存失败"),

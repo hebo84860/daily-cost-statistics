@@ -126,6 +126,12 @@ public class UserController {
 				map.put("msg", CodeEnum.PARAMS_ERROR.getValueStr());
 				return map;
 			}
+			//TODO inviteCode
+			if (!"15221593465".equals(paramsMap.get("inviteCode").toString())){
+				map.put("code", CodeEnum.INVITE_CODE_ERROR.getCodeInt());
+				map.put("msg", CodeEnum.INVITE_CODE_ERROR.getValueStr());
+				return map;
+			}
 			UserEntity user = userService.getUserEntityByUserName(paramsMap.get("username").toString());
 			if (user!=null){
 				map.put("code", CodeEnum.ACCOUNT_EXIST.getCodeInt());

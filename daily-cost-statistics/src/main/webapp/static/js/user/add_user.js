@@ -11,14 +11,26 @@ $(document).ready(function(){
         history.back();
     });
     $(".span-prompt").off().on().blur(function(){
-        if($(this).attr("id")=='username'){
-            validUsernameRepeat($("#username").val());
+        var usernameReg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+        var passwordReg = /^[a-zA-Z]\w{5,17}$/;
+        if($(this).attr("id")=='username' && usernameReg.test($(this).val())){
+            if($(this).val() && usernameReg.test($(this).val()))
+                validUsernameRepeat($("#username").val());
+            if(!$(this).val() || !usernameReg.test($(this).val())){
+                $(this).next("span").show();
+            }
         }
-        if(!$(this).val()){
+        else if($(this).attr("id")=='password' && (!$(this).val() || !passwordReg.test($(this).val())))
+        {
             $(this).next("span").show();
-        }
-        if($(this).attr("id")=='confirmPassword' && $(this).val()!=$("#password").val()){
-            $(this).next("span").show();
+        }else
+        {
+            if(!$(this).val()){
+                $(this).next("span").show();
+            }
+            if($(this).attr("id")=='confirmPassword' && $(this).val()!=$("#password").val()) {
+                $(this).next("span").show();
+            }
         }
     }).focus(function(){
         $(this).next("span").hide();
@@ -36,8 +48,10 @@ function ajaxAddUser(){
     var nickname = $("#nickname").val();
     var password = $("#password").val();
     var email = $("#email").val();
-    if(!username){
-        alert('请填写用户名！');
+    var inviteCode = $("#inviteCode").val();
+    var reg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+    if(!username || !reg.test(username)){
+        alert('请正确填写用户名！');
         return;
     }
     if(!realname){
@@ -48,8 +62,13 @@ function ajaxAddUser(){
         alert('请填写用户昵称！');
         return;
     }
-    if(!password){
-        alert('请填写用户密码！');
+    reg = /^[a-zA-Z]\w{5,17}$/;
+    if(!password || !reg.test(password)){
+        alert('请正确填写用户密码！');
+        return;
+    }
+    if(!inviteCode){
+        alert('请填写用户注册邀请码！');
         return;
     }
     if(password!=$("#confirmPassword").val()){
@@ -62,6 +81,7 @@ function ajaxAddUser(){
     paramsJson['nickname'] = nickname;
     paramsJson['realname'] = realname;
     paramsJson['password'] = password;
+    paramsJson['inviteCode'] = inviteCode;
     if(email)
         paramsJson['email'] = email;
 

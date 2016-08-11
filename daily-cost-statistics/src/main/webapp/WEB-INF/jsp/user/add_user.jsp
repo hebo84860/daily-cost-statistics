@@ -26,9 +26,9 @@
                     <div class="row form-group">
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="username">账号名称</label>
-                            <input id="username" type="text" class="form-control span-prompt"  >
-                            <span class="red-display-none">请填写用户名称</span>
-                            <span class="red-display-none" id="usernameExist">该用户名已经存在，请重新填写！</span>
+                            <input id="username" type="text" class="form-control span-prompt" placeholder="字母开头,数字或下划线（5-16位）。" >
+                            <span class="red-display-none">请填写用户名称,字母开头数字或下划线（5-16位）。</span>
+                            <span class="red-display-none" id="usernameExist">抱歉！该用户名已经存在，请重新填写！</span>
                         </div>
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="realname">真实姓名</label>
@@ -47,17 +47,11 @@
                             <input type="text" class="form-control" id="email"<%-- placeholder="admin@company.com"--%>>
                         </div>
                     </div>
-                    <%--<div class="row form-group">
-                        <div class="col-lg-6 col-md-6 form-group">
-                            <label for="inputCurrentPassword">Current Password</label>
-                            <input type="password" class="form-control highlight" id="inputCurrentPassword" placeholder="*********************">
-                        </div>
-                    </div>--%>
                     <div class="row form-group">
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="password">用户密码</label>
-                            <input type="password" class="form-control span-prompt" id="password">
-                            <span class="red-display-none">请填写用户密码</span>
+                            <input type="password" class="form-control span-prompt" id="password" placeholder="字母开头数字或下划线（6-18位）。">
+                            <span class="red-display-none">请填写用户密码,字母开头数字或下划线（6-18位）。</span>
                         </div>
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="confirmPassword">确认密码</label>
@@ -67,8 +61,9 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-lg-12 has-warning form-group">
-                            <label class="control-label" for="warning">警告信息</label>
-                            <input type="text" class="form-control" id="warning">
+                            <label class="control-label" for="inviteCode">邀请码</label>
+                            <input type="text" class="form-control span-prompt" id="inviteCode">
+                            <span class="red-display-none">请填写用户注册邀请码</span>
                         </div>
                     </div>
                     <div class="row form-group">

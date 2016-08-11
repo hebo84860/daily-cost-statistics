@@ -1,6 +1,7 @@
 package com.yeapoo.statistics.controller;
 
 import com.yeapoo.statistics.constant.CodeEnum;
+import com.yeapoo.statistics.constant.ConstantEnum;
 import com.yeapoo.statistics.constant.CostDetail;
 import com.yeapoo.statistics.constant.CostType;
 import com.yeapoo.statistics.constant.Status;
@@ -59,17 +60,12 @@ public class CostController {
                 baseListResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
                 return baseListResponse;
             }
+            if (!ConstantEnum.SUPER_ADMIN.getValueStr().equals(user.getJob())){
+                costListParam.setCreateBy(user.getUsername());
+            }
             BaseQueryRequest<CostEntity> queryRequest =
                     new BaseQueryRequest<CostEntity>(costListParam.getPagination(), costListParam.getCostEntity());
             baseListResponse = costService.queryCostList(queryRequest);
-//            List<CostListVO> listVOs = new ArrayList<CostListVO>();
-//            CostListVO resultVo = new CostListVO();
-//            CostEntity costEntity = new CostEntity();
-//            costEntity.setId(1l);
-//            costEntity.setCostTime(new Date());
-//            resultVo.setCostEntity(costEntity);
-//            listVOs.add(resultVo);
-//            baseListResponse.setResults(listVOs);
         } catch (Exception e) {
             baseListResponse.setCode(CodeEnum.SYSTEM_ERROR);
             baseListResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());

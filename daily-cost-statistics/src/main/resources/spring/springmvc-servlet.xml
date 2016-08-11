@@ -80,9 +80,12 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<!--<mvc:mapping path="/**"/>-->
 			<mvc:mapping path="/ps/*"/>
 			<mvc:mapping path="/main/*"/>
 			<mvc:mapping path="/user/*"/>
+			<mvc:mapping path="/cost/*"/>
+
 			<mvc:exclude-mapping path="/main/login"/>
 			<mvc:exclude-mapping path="/user/toAdd"/>
 			<mvc:exclude-mapping path="/user/addOrUpdate"/>

@@ -20,6 +20,8 @@ public class CostEntity implements Serializable{
 
     private String costUserName;
 
+    private String costPhone;
+
     private Date costTime;
 
     private String description;
@@ -72,6 +74,14 @@ public class CostEntity implements Serializable{
 
     public Date getCostTime() {
         return costTime;
+    }
+
+    public String getCostPhone() {
+        return costPhone;
+    }
+
+    public void setCostPhone(String costPhone) {
+        this.costPhone = costPhone;
     }
 
     public void setCostTime(Date costTime) {

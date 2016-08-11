@@ -20,6 +20,8 @@ public class CostListParam implements Serializable, BaseParam {
 
     private CostEntity costEntity = new CostEntity();
 
+    private String costTimeStr;
+
     private Pagination pagination = new Pagination();
 
     public CostEntity getCostEntity() {
@@ -220,5 +222,21 @@ public class CostListParam implements Serializable, BaseParam {
 
     public void setRowsByCustom(int customRows) {
         pagination.setRowsByCustom(customRows);
+    }
+
+    public String getCostTimeStr() {
+        return costTimeStr;
+    }
+
+    public void setCostTimeStr(String costTimeStr) {
+        this.costTimeStr = costTimeStr;
+    }
+
+    public void setCostPhone(String costPhone) {
+        costEntity.setCostPhone(costPhone);
+    }
+
+    public String getCostPhone() {
+        return costEntity.getCostPhone();
     }
 }

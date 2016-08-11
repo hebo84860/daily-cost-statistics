@@ -7,6 +7,7 @@
     <result column="cost_amount" property="costAmount" jdbcType="DECIMAL" />
     <result column="cost_user_id" property="costUserId" jdbcType="VARCHAR" />
     <result column="cost_user_name" property="costUserName" jdbcType="VARCHAR" />
+    <result column="cost_phone" property="costPhone" jdbcType="VARCHAR" />
     <result column="cost_time" property="costTime" jdbcType="TIMESTAMP" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -18,7 +19,7 @@
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, cost_detail, cost_amount, cost_user_id, cost_user_name, cost_time, description, 
+    id, cost_detail, cost_amount, cost_user_id, cost_user_name,cost_phone, cost_time, description,
     status, cost_type, reason, create_time, create_by, update_time, update_by
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -34,12 +35,12 @@
   <!-- 插入消费记录 -->
   <insert id="insert" parameterType="com.yeapoo.statistics.entity.CostEntity" >
     insert into cost (id, cost_detail, cost_amount, 
-      cost_user_id, cost_user_name, cost_time, 
+      cost_user_id, cost_user_name,cost_phone, cost_time,
       description, status, cost_type, 
       reason, create_time, create_by, 
       update_time, update_by)
     values (#{id,jdbcType=BIGINT}, #{costDetail.code,jdbcType=VARCHAR}, #{costAmount,jdbcType=DECIMAL},
-      #{costUserId,jdbcType=VARCHAR}, #{costUserName,jdbcType=VARCHAR}, #{costTime,jdbcType=TIMESTAMP}, 
+      #{costUserId,jdbcType=VARCHAR}, #{costUserName,jdbcType=VARCHAR}, #{costPhone,jdbcType=VARCHAR}, #{costTime,jdbcType=TIMESTAMP},
       #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{costType,jdbcType=VARCHAR}, 
       #{reason,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR})
@@ -59,6 +60,9 @@
       </if>
       <if test="costUserName != null" >
         cost_user_name = #{costUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="costPhone != null" >
+        cost_phone = #{costPhone,jdbcType=VARCHAR},
       </if>
       <if test="costTime != null" >
         cost_time = #{costTime,jdbcType=TIMESTAMP},

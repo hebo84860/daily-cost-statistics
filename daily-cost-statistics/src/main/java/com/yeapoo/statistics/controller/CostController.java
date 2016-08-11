@@ -6,11 +6,14 @@ import com.yeapoo.statistics.constant.CostType;
 import com.yeapoo.statistics.constant.Status;
 import com.yeapoo.statistics.controller.base.BaseListResponse;
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
+import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.param.CostListParam;
 import com.yeapoo.statistics.controller.vo.CostListVO;
 import com.yeapoo.statistics.entity.CostEntity;
 import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.service.CostService;
+import com.yeapoo.statistics.util.DateUtil;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +76,32 @@ public class CostController {
             e.printStackTrace();
         }
         return baseListResponse;
+    }
+
+    @ResponseBody
+    @RequestMapping("/ajaxAddOrUpdateCost")
+    public BaseSingleResponse ajaxAddOrUpdateCost(HttpServletRequest request, CostListParam costListParam){
+        BaseSingleResponse baseSingleResponse = new BaseSingleResponse();
+        try {
+            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            if (user==null){
+                baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
+                baseSingleResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
+                return baseSingleResponse;
+            }
+//            if (costListParam.getCostAmount()==null || costListParam.get)
+            costListParam.setUpdateBy(user.getUsername());
+            if (StringUtils.isNotBlank(costListParam.getCostTimeStr()))
+                costListParam.setCostTime(DateUtil.string2Date(costListParam.getCostTimeStr(), DateUtil.FORMAT_DATE));
+            if (costListParam.getId()==null)
+                costListParam.setCreateBy(user.getUsername());
+            baseSingleResponse = costService.addOrUpdateCost(costListParam.getCostEntity());
+        } catch (Exception e) {
+            baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
+            baseSingleResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
+            e.printStackTrace();
+        }
+        return baseSingleResponse;
     }
 
 }

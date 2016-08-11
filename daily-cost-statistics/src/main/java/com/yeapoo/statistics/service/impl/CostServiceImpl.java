@@ -35,7 +35,6 @@ public class CostServiceImpl  implements CostService{
         BaseSingleResponse<CostEntity> baseSingleResponse = new BaseSingleResponse<CostEntity>();
         try {
             if (costEntity!=null){
-                costEntity.setCreateTime(new Date());
                 costEntity.setUpdateTime(new Date());
                 if (costEntity.getCostTime()==null){
                     costEntity.setCostTime(new Date());
@@ -43,6 +42,7 @@ public class CostServiceImpl  implements CostService{
                 if (costEntity.getId()!=null){
                     costEntityMapper.updateByPrimaryKeySelective(costEntity);
                 }else {
+                    costEntity.setCreateTime(new Date());
                     costEntityMapper.insert(costEntity);
                 }
                 baseSingleResponse.setResult(costEntity);

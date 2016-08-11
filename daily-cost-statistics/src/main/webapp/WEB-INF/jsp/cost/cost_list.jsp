@@ -11,12 +11,20 @@
     <link href="${ctx}/static/css/index.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="${ctx}/static/js/jquery-ui-1.8.11/css/redmond/jquery-ui-1.8.11.css"/>
     <link type="text/css" rel="stylesheet" href="${ctx}/static/jqGrid/css/ui.jqgrid.css"/>
+    <!--时间控件样式-->
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/jquery.datetimepicker.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/index.css">
+    <!--时间控件样式-->
 
     <script src="${ctx}/static/js/jquery/jquery.js" type="text/javascript"></script>
     <%--<script src="${ctx}/static/js/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>--%>
     <script src="${ctx}/static/js/jquery-ui-1.8.11/js/jquery-ui-1.8.11.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/jqGrid/src/i18n/grid.locale-cn.js" type="text/javascript"></script>
     <script src="${ctx}/static/jqGrid/js/jquery.jqGrid.src.js" type="text/javascript"></script>
+    <!--时间控件-->
+    <script type="text/javascript" src="${ctx}/static/js/jquery/jquery.datetimepicker.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/common.js"></script><!--时间初始化-->
+    <!--时间控件-->
     <script src="${ctx}/static/js/cost/cost_list.js" type="text/javascript"></script>
 </head>
 <body>
@@ -42,14 +50,25 @@
                             <select id="costDetail" style="width:170px">
                                 <option value="" selected>全部</option>
                                 <c:forEach items="${costDetailEnum}" var="item">
-                                    <option value="${item}">${item.cnName}</option>
+                                    <c:if test="${item.code!=''}">
+                                        <option value="${item}">${item.cnName}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                            <span>消费详情：</span>
+                            <select id="costDetail" style="width:170px">
+                                <option value="" selected>全部</option>
+                                <c:forEach items="${costDetailEnum}" var="item">
+                                    <c:if test="${item.code!=''}">
+                                        <option value="${item}">${item.cnName}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                     </div>
                     <div class="col-lg-6 col-md-6 form-group">
                         <div class="form-group text-right">
                             <input type="button" id="searchCostList" value="查询" class="templatemo-blue-button"/>
-                            <input type="button" id="addCost" value="新增" class="templatemo-white-button"/>
+                            <input type="button" id="addCost" value="新增" class="templatemo-blue-button"/>
                         </div>
                     </div>
                 </div>
@@ -62,6 +81,7 @@
         <%@ include file="../../common/footer.jsp"%>
     </div>
 
+
     <div id="dialogCost" class="content content1" style="display:none; ">
         <input type="text" id="id2" style="display:none"/>
         <table width="100%" style="width: 560px ">
@@ -69,9 +89,7 @@
                 <input type="hidden" id="addId"/>
                 <td align="right">消费类型：</td>
                 <td>
-                    <%--<#--<input type="text" id="expressName" maxlength=20/>-->--%>
                     <select id="costTypeAdd" style="width:170px">
-                       <%--<jsp:useBean id="costTypeEnum" scope="request" type="java.util.List"/>--%>
                        <c:forEach items="${costTypeEnum}" var="item">
                            <option value="${item}">${item.cnName}</option>
                        </c:forEach>
@@ -81,7 +99,9 @@
                 <td>
                     <select id="costDetailAdd" style="width:170px">
                         <c:forEach items="${costDetailEnum}" var="item">
-                            <option value="${item}">${item.cnName}</option>
+                            <c:if test="${item.code!=''}">
+                                <option value="${item}">${item.cnName}</option>
+                            </c:if>
                         </c:forEach>
                     </select>
                 </td>
@@ -89,50 +109,40 @@
             <tr height="35">
                 <td align="right">消费者：</td>
                 <td>
-                    <input type="text" id="costUserName" maxlength=30/>
+                    <input type="text" id="costUserName" class="cssInput" maxlength=30/>
                 </td>
-                <td align="right">消费者联系方式：</td>
+                <td align="right">消费者手机号：</td>
                 <td>
-                    <input type="text" id="costPhone" maxlength=15/>
+                    <input type="text" id="costPhone" class="cssInput" maxlength=11/>
                 </td>
             </tr>
             <tr height="35">
                 <td align="right">消费金额：</td>
                 <td>
-                    <input type="text" id="costAmount" maxlength="10"/>
+                    <input type="text" id="costAmount" class="cssInput" maxlength="10"/>
                 </td>
                 <td align="right">消费时间：</td>
                 <td>
-                    <input type="text" id="costTime" maxlength="10"/>
+                    <input type="text" id="startTime" class="cssInput" readonly/>
                 </td>
             </tr>
             <tr height="35">
                 <td align="right">消费描述：</td>
                 <td colspan="3">
-                    <textarea  id="description"  style="width:360px;height:70px;" cols="80" rows="4"></textarea>
+                    <textarea  id="description"  style="width:360px;height:70px;" cols="80" rows="4" ></textarea>
                 </td>
             </tr>
-            <%--<tr height="35">--%>
-                <%--<td align="right">发件地：</td>--%>
-                <%--<td>--%>
-                    <%--<input type="text" id="fromProNames" maxlength=200 placeholder="发件省"/>--%>
-                    <%--<input type="hidden" id="sendFromProIds" />--%>
-                <%--</td>--%>
-                <%--<td colspan="2">--%>
-                    <%--<input type="text" id="fromCityNames" style="width: 260px;" maxlength=200 placeholder="发件市" />--%>
-                    <%--<input type="hidden" id="sendFromCityIds" />--%>
-                <%--</td>--%>
             <tr height="35">
                 <td align="right"></td>
                 <td colspan="3">
-                    <span style="color: yellowgreen">目的地/发件地多个用英文逗号“,”分开, 只填一个ALL 标识不限制</span>
+                    <span style="color: yellowgreen">消费描述120字以内。</span>
                 </td>
             </tr>
             <tr height="35">
                 <td colspan=4 align="center">
                     <div class="click" style="margin:0 160px">
-                        <a href="javascript:void(0);" onclick="saveOrUpdateDistributionRule();"><div class="button">保存</div></a>
-                        <a href="javascript:void(0);" onclick="hideAddDiv();"><div class="button">取消</div></a>
+                        <a href="javascript:void(0);" id="saveOrUpdateCost"><div class="button">保存</div></a>
+                        <a href="javascript:void(0);" id="hideAddDiv"><div class="button">取消</div></a>
                     </div>
                 </td>
             </tr>

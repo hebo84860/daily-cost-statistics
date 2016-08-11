@@ -1,13 +1,58 @@
 $(document).ready(function() {
     initGrid();
+    setDefaultTime();
     $("#searchCostList").off().on().click(function(){
         queryCostList();
     });
     $("#addCost").off().on().click(function(){
         showAddDiv();
     });
+    $("#saveOrUpdateCost").off().on().click(function(){
+        saveOrUpdateCost();
+    });
+    $("#hideAddDiv").off().on().click(function(){
+        hideAddDiv();
+    });
 
 });
+
+function saveOrUpdateCost(){
+    var url_ = 'ajaxAddOrUpdateCost';
+    var costAmount = $("#costAmount").val();
+    var costPhone = $("#costPhone").val();
+    if(!costAmount){
+        alert("请填写消费金额！");
+        return false;
+    }
+    var reg = /^(1)\d{10}$/;
+    if(costPhone && !reg.test(costPhone)){
+        alert("请填写正确的手机号");
+        return false;
+    }
+    $.ajax({
+        url:url_,
+        type:'post',
+        dataType: "json",
+        data:{
+            'costType':$("#costTypeAdd").val(),
+            costDetail:$("#costDetailAdd").val(),
+            costUserName:$("#costUserName").val(),
+            costPhone:costPhone,
+            costAmount:costAmount,
+            costTimeStr:$("#startTime").val(),
+            description:$("#description").val(),
+            id:$("#addId").val()
+        },
+        success:function(data){
+            console.info(data);
+            alert(data.message);
+            if(data.status==true){
+                hideAddDiv();
+                window.location.href=window.location.href;
+            }
+        }
+    });
+}
 
 function showAddDiv(id){
 
@@ -17,6 +62,10 @@ function showAddDiv(id){
         height: 299,
         modal: 'true'
     });
+}
+
+function hideAddDiv(){
+    $('#dialogCost').dialog("close");
 }
 
 function queryCostList(){
@@ -156,4 +205,13 @@ function getCostListParams(){
         'costDetail' : $("#costDetail").val(),
         'costType' : $("#costType").val()
     }
+}
+/**
+ * 设置默认时间
+ */
+function setDefaultTime() {
+    var curDate = new Date();
+    var startDate = (curDate.getFullYear()-1) + "/" + (curDate.getMonth() + 1);
+    $("#startTime").val(getFormatDate(new Date(startDate), 'yyyy-MM-dd'));
+    //$('.endTime').val(getFormatDate(new Date(), 'yyyy-MM-dd'));
 }

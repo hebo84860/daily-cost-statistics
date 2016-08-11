@@ -96,6 +96,7 @@ public class CostController {
             if (costListParam.getId()==null)
                 costListParam.setCreateBy(user.getUsername());
             baseSingleResponse = costService.addOrUpdateCost(costListParam.getCostEntity());
+            baseSingleResponse.setMessage("操作成功！");
         } catch (Exception e) {
             baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
             baseSingleResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());

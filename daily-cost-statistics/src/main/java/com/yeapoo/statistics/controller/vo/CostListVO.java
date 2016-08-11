@@ -39,6 +39,9 @@ public class CostListVO implements Serializable {
     }
 
     public String getStatusStr() {
+        if (this.getStatus()!=null){
+            return this.getStatus().getCnName();
+        }
         return statusStr;
     }
 
@@ -47,6 +50,9 @@ public class CostListVO implements Serializable {
     }
 
     public String getCostDetailStr() {
+        if (this.getCostDetail()!=null){
+            return this.getCostDetail().getCnName();
+        }
         return costDetailStr;
     }
 
@@ -55,8 +61,8 @@ public class CostListVO implements Serializable {
     }
 
     public String getCostTypeStr() {
-        if (this.getCostTime()!=null){
-            return DateUtil.date2String(this.getCostTime(), DateUtil.FORMAT_DATETIME);
+        if (this.getCostType()!=null){
+            return this.getCostType().getCnName();
         }
         return costTypeStr;
     }
@@ -66,6 +72,9 @@ public class CostListVO implements Serializable {
     }
 
     public String getCostTimeStr() {
+        if (this.getCostTime()!=null){
+            return DateUtil.date2String(this.getCostTime(), DateUtil.FORMAT_DATE);
+        }
         return costTimeStr;
     }
 
@@ -74,6 +83,9 @@ public class CostListVO implements Serializable {
     }
 
     public String getCreateTimeStr() {
+        if (this.getCreateTime()!=null){
+            return DateUtil.date2String(this.getCreateTime(), DateUtil.FORMAT_DATETIME2);
+        }
         return createTimeStr;
     }
 
@@ -82,6 +94,9 @@ public class CostListVO implements Serializable {
     }
 
     public String getUpdateTimeStr() {
+        if (this.getUpdateTime()!=null){
+            return DateUtil.date2String(this.getUpdateTime(), DateUtil.FORMAT_DATETIME2);
+        }
         return updateTimeStr;
     }
 

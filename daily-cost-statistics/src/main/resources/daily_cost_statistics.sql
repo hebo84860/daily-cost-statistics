@@ -376,9 +376,11 @@ DROP TABLE IF EXISTS `cost`;
 CREATE TABLE `cost` (
   `id` bigint(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `cost_detail` varchar(24) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '消费详情: 娱乐、购物、房租、生活吃饭、其它',
+  `cost_budget` decimal(10,0) DEFAULT NULL COMMENT '消费预算',
   `cost_amount` decimal(10,2) DEFAULT NULL COMMENT '消费金额',
   `cost_user_id` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cost_user_name` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '消费人名字（如果是个人消费）',
+  `cost_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '消费者手机号',
   `cost_time` datetime DEFAULT NULL COMMENT '消费时间',
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '消费描述',
   `status` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '状态：VALID-正常 INVALID-删除',
@@ -389,7 +391,7 @@ CREATE TABLE `cost` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `update_by` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 

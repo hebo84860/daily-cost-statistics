@@ -13,18 +13,27 @@ $(document).ready(function() {
     $("#hideAddDiv").off().on().click(function(){
         hideAddDiv();
     });
+    $("#costAmount").off().on().blur(function(){
+        syncCostBudget();
+    });
 
 });
 
 function saveOrUpdateCost(){
     var url_ = 'ajaxAddOrUpdateCost';
     var costAmount = $("#costAmount").val();
+    var costBudget = $("#costBudget").val();
     var costPhone = $("#costPhone").val();
-    if(!costAmount){
-        alert("请填写消费金额！");
+    var reg = /^(\-)?\d+(\.\d{1,2})?$/;
+    if(!costAmount || !reg.test(costAmount)){
+        alert("消费金额填写错误！");
         return false;
     }
-    var reg = /^(1)\d{10}$/;
+    if(costBudget && !reg.test(costBudget)){
+        alert("消费预算填写错误！");
+        return false;
+    }
+    reg = /^(1)\d{10}$/;
     if(costPhone && !reg.test(costPhone)){
         alert("请填写正确的手机号");
         return false;
@@ -36,9 +45,11 @@ function saveOrUpdateCost(){
         data:{
             'costType':$("#costTypeAdd").val(),
             costDetail:$("#costDetailAdd").val(),
+            status:$("#statusAdd").val(),
             costUserName:$("#costUserName").val(),
             costPhone:costPhone,
             costAmount:costAmount,
+            costBudget:costBudget,
             costTimeStr:$("#startTime").val(),
             description:$("#description").val(),
             id:$("#addId").val()
@@ -59,7 +70,7 @@ function showAddDiv(id){
     $('#dialogCost').dialog({
         title: '新增消费记录',
         width: 600,
-        height: 299,
+        height: 400,
         modal: 'true'
     });
 }
@@ -119,6 +130,7 @@ function initGrid() {
                 name : 'statusStr',
                 index : 'statusStr',
                 align : 'center',
+                cellattr: addStatusCellAttr,
                 sortable : false
             },{
                 name : 'costTypeStr',
@@ -200,6 +212,12 @@ function initGrid() {
     });
 }
 
+function addStatusCellAttr(rowId, val, rawObject, cm, rdata) {
+    if (val=='无效') {
+        return "style='color:red'";
+    }
+}
+
 function getCostListParams(){
     return {
         'costDetail' : $("#costDetail").val(),
@@ -214,4 +232,8 @@ function setDefaultTime() {
     var startDate = (curDate.getFullYear()-1) + "/" + (curDate.getMonth() + 1);
     $("#startTime").val(getFormatDate(new Date(startDate), 'yyyy-MM-dd'));
     //$('.endTime').val(getFormatDate(new Date(), 'yyyy-MM-dd'));
+}
+
+function syncCostBudget(){
+    $("#costBudget").val($("#costAmount").val());
 }

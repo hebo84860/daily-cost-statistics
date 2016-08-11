@@ -239,4 +239,12 @@ public class CostListParam implements Serializable, BaseParam {
     public String getCostPhone() {
         return costEntity.getCostPhone();
     }
+
+    public void setCostBudget(BigDecimal costBudget) {
+        costEntity.setCostBudget(costBudget);
+    }
+
+    public BigDecimal getCostBudget() {
+        return costEntity.getCostBudget();
+    }
 }

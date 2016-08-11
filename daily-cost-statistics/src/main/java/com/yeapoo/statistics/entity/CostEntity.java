@@ -14,6 +14,8 @@ public class CostEntity implements Serializable{
 
     private CostDetail costDetail;
 
+    private BigDecimal costBudget;
+
     private BigDecimal costAmount;
 
     private String costUserId;
@@ -54,6 +56,14 @@ public class CostEntity implements Serializable{
 
     public void setCostAmount(BigDecimal costAmount) {
         this.costAmount = costAmount;
+    }
+
+    public BigDecimal getCostBudget() {
+        return costBudget;
+    }
+
+    public void setCostBudget(BigDecimal costBudget) {
+        this.costBudget = costBudget;
     }
 
     public String getCostUserId() {

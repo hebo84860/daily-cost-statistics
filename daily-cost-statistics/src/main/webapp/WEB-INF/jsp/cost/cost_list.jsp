@@ -55,17 +55,15 @@
                                     </c:if>
                                 </c:forEach>
                             </select>
-                            <span>消费详情：</span>
-                            <select id="costDetail" style="width:170px">
-                                <option value="" selected>全部</option>
-                                <c:forEach items="${costDetailEnum}" var="item">
-                                    <c:if test="${item.code!=''}">
-                                        <option value="${item}">${item.cnName}</option>
-                                    </c:if>
-                                </c:forEach>
-                            </select>
                     </div>
                     <div class="col-lg-6 col-md-6 form-group">
+                        <span>记录状态：</span>
+                        <select id="status" style="width:170px">
+                            <c:forEach items="${statusEnum}" var="item">
+                                <option value="${item}">${item.cnName}</option>
+                            </c:forEach>
+                            <option value="">全部</option>
+                        </select>
                         <div class="form-group text-right">
                             <input type="button" id="searchCostList" value="查询" class="templatemo-blue-button"/>
                             <input type="button" id="addCost" value="新增" class="templatemo-blue-button"/>
@@ -107,13 +105,17 @@
                 </td>
             </tr>
             <tr height="35">
-                <td align="right">消费者：</td>
+                <td align="right">有效状态：</td>
                 <td>
-                    <input type="text" id="costUserName" class="cssInput" maxlength=30/>
+                    <select id="statusAdd" style="width:170px">
+                        <c:forEach items="${statusEnum}" var="item">
+                            <option value="${item}">${item.cnName}</option>
+                        </c:forEach>
+                    </select>
                 </td>
-                <td align="right">消费者手机号：</td>
+                <td align="right">消费时间：</td>
                 <td>
-                    <input type="text" id="costPhone" class="cssInput" maxlength=11/>
+                    <input type="text" id="startTime" class="cssInput" readonly/>
                 </td>
             </tr>
             <tr height="35">
@@ -121,9 +123,19 @@
                 <td>
                     <input type="text" id="costAmount" class="cssInput" maxlength="10"/>
                 </td>
-                <td align="right">消费时间：</td>
+                <td align="right">消费预算：</td>
                 <td>
-                    <input type="text" id="startTime" class="cssInput" readonly/>
+                    <input type="text" id="costBudget" class="cssInput" maxlength="10"/>
+                </td>
+            </tr>
+            <tr height="35">
+                <td align="right">消费者：</td>
+                <td>
+                    <input type="text" id="costUserName" class="cssInput" maxlength=30/>
+                </td>
+                <td align="right">消费者手机号：</td>
+                <td>
+                    <input type="text" id="costPhone" class="cssInput" maxlength=11/>
                 </td>
             </tr>
             <tr height="35">
@@ -135,7 +147,7 @@
             <tr height="35">
                 <td align="right"></td>
                 <td colspan="3">
-                    <span style="color: yellowgreen">消费描述120字以内。</span>
+                    <span style="color: yellowgreen">消费预算默认消费金额值，看修改。消费描述120字以内。</span>
                 </td>
             </tr>
             <tr height="35">

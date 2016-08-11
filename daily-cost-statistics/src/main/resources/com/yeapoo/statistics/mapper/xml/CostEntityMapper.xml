@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yeapoo.statistics.entity.CostEntity" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="cost_detail" property="costDetail" jdbcType="VARCHAR" typeHandler="com.yeapoo.statistics.constant.handler.CostDetailHandler"/>
+    <result column="cost_budget" property="costBudget" jdbcType="DECIMAL" />
     <result column="cost_amount" property="costAmount" jdbcType="DECIMAL" />
     <result column="cost_user_id" property="costUserId" jdbcType="VARCHAR" />
     <result column="cost_user_name" property="costUserName" jdbcType="VARCHAR" />
@@ -19,7 +20,7 @@
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, cost_detail, cost_amount, cost_user_id, cost_user_name,cost_phone, cost_time, description,
+    id, cost_detail,cost_budget, cost_amount, cost_user_id, cost_user_name,cost_phone, cost_time, description,
     status, cost_type, reason, create_time, create_by, update_time, update_by
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -34,12 +35,12 @@
   </delete>
   <!-- 插入消费记录 -->
   <insert id="insert" parameterType="com.yeapoo.statistics.entity.CostEntity" >
-    insert into cost (id, cost_detail, cost_amount, 
+    insert into cost (id, cost_detail,cost_budget,cost_amount,
       cost_user_id, cost_user_name,cost_phone, cost_time,
       description, status, cost_type, 
       reason, create_time, create_by, 
       update_time, update_by)
-    values (#{id,jdbcType=BIGINT}, #{costDetail.code,jdbcType=VARCHAR}, #{costAmount,jdbcType=DECIMAL},
+    values (#{id,jdbcType=BIGINT}, #{costDetail.code,jdbcType=VARCHAR}, #{costBudget,jdbcType=DECIMAL}, #{costAmount,jdbcType=DECIMAL},
       #{costUserId,jdbcType=VARCHAR}, #{costUserName,jdbcType=VARCHAR}, #{costPhone,jdbcType=VARCHAR}, #{costTime,jdbcType=TIMESTAMP},
       #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{costType,jdbcType=VARCHAR}, 
       #{reason,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
@@ -51,6 +52,9 @@
     <set >
       <if test="costDetail != null" >
         cost_detail = #{costDetail.code,jdbcType=VARCHAR},
+      </if>
+      <if test="costBudget != null" >
+        cost_budget = #{costBudget,jdbcType=DECIMAL},
       </if>
       <if test="costAmount != null" >
         cost_amount = #{costAmount,jdbcType=DECIMAL},
@@ -121,7 +125,7 @@
     <where>
       <include refid="Base_Where_Condition"/>
     </where>
-    ORDER BY create_time
+    ORDER BY cost_time,create_time DESC
     <if test="pagination!=null">
       limit #{pagination.stratRecodes}, #{pagination.rows}
     </if>

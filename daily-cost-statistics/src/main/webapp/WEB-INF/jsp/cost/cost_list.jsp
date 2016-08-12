@@ -13,12 +13,14 @@
     <link type="text/css" rel="stylesheet" href="${ctx}/static/jqGrid/css/ui.jqgrid.css"/>
     <!--时间控件样式-->
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/jquery.datetimepicker.css">
+    <%--<link rel="stylesheet" type="text/css" href="${ctx}/static/js/layer/skin/layer.css">--%>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/index.css">
     <!--时间控件样式-->
 
     <script src="${ctx}/static/js/jquery/jquery.js" type="text/javascript"></script>
     <%--<script src="${ctx}/static/js/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>--%>
     <script src="${ctx}/static/js/jquery-ui-1.8.11/js/jquery-ui-1.8.11.min.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/layer/layer.js" type="text/javascript"></script>
     <script src="${ctx}/static/jqGrid/src/i18n/grid.locale-cn.js" type="text/javascript"></script>
     <script src="${ctx}/static/jqGrid/js/jquery.jqGrid.src.js" type="text/javascript"></script>
     <!--时间控件-->

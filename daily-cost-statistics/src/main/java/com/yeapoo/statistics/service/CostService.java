@@ -5,6 +5,7 @@ import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.vo.CostListVO;
 import com.yeapoo.statistics.entity.CostEntity;
+import com.yeapoo.statistics.entity.UserEntity;
 
 /**
  *
@@ -12,7 +13,9 @@ import com.yeapoo.statistics.entity.CostEntity;
  */
 public interface CostService {
 
-    BaseSingleResponse<CostEntity> addOrUpdateCost(CostEntity costEntity);
+    BaseSingleResponse<CostEntity> addOrUpdateCost(CostEntity costEntity, UserEntity user);
+
+    BaseSingleResponse modifyCostStatus(CostEntity costEntity,UserEntity user);
 
     BaseListResponse<CostListVO> queryCostList(BaseQueryRequest<CostEntity> queryRequest);
 

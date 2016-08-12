@@ -47,28 +47,33 @@ function ajaxAddUser(){
     var inviteCode = $("#inviteCode").val();
     var reg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
     if(!username || !reg.test(username)){
-        alert('请正确填写用户名！');
+        layer.alert('请正确填写用户名！',
+            {
+                icon: 5,
+                skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+            }
+        );
         return;
     }
     if(!realname){
-        alert('请填写您的姓名！');
+        layer.alert('请填写您的姓名！',{icon: 5, skin: 'layer-ext-moon'});
         return;
     }
     if(!nickname){
-        alert('请填写用户昵称！');
+        layer.alert('请填写用户昵称！',{icon: 5, skin: 'layer-ext-moon'});
         return;
     }
     reg = /^[a-zA-Z]\w{5,17}$/;
     if(!password || !reg.test(password)){
-        alert('请正确填写用户密码！');
+        layer.alert('请正确填写用户密码！',{icon: 5, skin: 'layer-ext-moon'});
         return;
     }
     if(!inviteCode){
-        alert('请填写用户注册邀请码！');
+        layer.alert('请填写用户注册邀请码！',{icon: 5, skin: 'layer-ext-moon'});
         return;
     }
     if(password!=$("#confirmPassword").val()){
-        alert('两次密码输入不相同！');
+        layer.alert('两次密码输入不相同！',{icon: 5, skin: 'layer-ext-moon'});
         $("#confirmPassword").val("");
         $("#password").val("");
         return;
@@ -81,7 +86,7 @@ function ajaxAddUser(){
     if(email)
         paramsJson['email'] = email;
 
-    //alert(JSON.stringify(paramsJson));
+    //layer.alert(JSON.stringify(paramsJson));
     $.ajax({
         url: url_,
         type: 'get',
@@ -90,7 +95,7 @@ function ajaxAddUser(){
         //dateType: "text",
         success: function(data){
             var d = JSON.parse(data);
-            alert(d.msg);
+            layer.alert(d.msg);
             if (d.code==0) {
                 location.href = '../main/login'
             }

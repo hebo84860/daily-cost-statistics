@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    //layer.open({
+    //    type: 1,
+    //    area: ['600px', '360px'],
+    //    shadeClose: true, //点击遮罩关闭
+    //    content: '\<\div style="padding:20px;">自定义内容\<\/div>'
+    //});
     initGrid();
     setDefaultTime();
     $("#searchCostList").off().on().click(function(){
@@ -26,16 +32,16 @@ function saveOrUpdateCost(){
     var costPhone = $("#costPhone").val();
     var reg = /^(\-)?\d+(\.\d{1,2})?$/;
     if(!costAmount || !reg.test(costAmount)){
-        alert("消费金额填写错误！");
+        layer.alert("消费金额填写错误！",{icon: 5, skin: 'layer-ext-moon'});
         return false;
     }
     if(costBudget && !reg.test(costBudget)){
-        alert("消费预算填写错误！");
+        layer.alert("消费预算填写错误！",{icon: 5, skin: 'layer-ext-moon'});
         return false;
     }
     reg = /^(1)\d{10}$/;
     if(costPhone && !reg.test(costPhone)){
-        alert("请填写正确的手机号");
+        layer.alert("请填写正确的手机号",{icon: 5, skin: 'layer-ext-moon'});
         return false;
     }
     $.ajax({
@@ -56,7 +62,7 @@ function saveOrUpdateCost(){
         },
         success:function(data){
             console.info(data);
-            alert(data.message);
+            layer.alert(data.message);
             if(data.status==true){
                 hideAddDiv();
                 window.location.href=window.location.href;
@@ -209,11 +215,11 @@ function initGrid() {
                 var statusStr = rowData['statusStr'];
                 //显示设为有效/ 无效链接
                 if(statusStr=="有效"){
-                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="disableCost(' + "'" +
+                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyCostStatus(' + "'" +
                         costId+ "' ,'" + status + "' ,'" + statusStr + "'" + ')" >设为无效</a>'
                         +" | <a href='javascript:void(0)' onclick='showAddDiv("+id+")' style='color:blue;'>编辑</a>";
                 }else{
-                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="disableCost(' + "'" +
+                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyCostStatus(' + "'" +
                         costId+ "' ,'" + status + "' ,'" + statusStr + "'" + ')" >设为有效</a>';
                 }
 
@@ -247,4 +253,45 @@ function setDefaultTime() {
 
 function syncCostBudget(){
     $("#costBudget").val($("#costAmount").val());
+}
+
+//修改消费状态
+function modifyCostStatus(id, status, validStatusStr) {
+    var gnl;
+    if (validStatusStr=="有效") {
+        status = "INVALID";
+        gnl = layer.prompt({
+            title: '设为无效，请填写原因。',
+            formType: 1 //prompt风格，支持0-2
+        }, function(reason){
+            ajaxModifyCostStatus(id, status,reason);
+        });
+    }else{
+        status = "VALID";
+        gnl = layer.confirm("确认将该记录设为有效？",{btn: ['确定','取消'] },
+                function(){
+                    ajaxModifyCostStatus(id, status,'');
+                    //layer.close(gnl);
+                }
+        );
+    }
+}
+
+function ajaxModifyCostStatus(id, status,reason){
+    $.ajax({
+        url : 'modifyCostStatus',
+        type:'post',
+        dataType : "json",
+        data : {
+            id:id,
+            status : status,
+            reason : reason
+        },
+        success: function(data){
+            if(data.status)
+                window.location.reload();
+            else
+                layer.alert(data.message);
+        }
+    });
 }

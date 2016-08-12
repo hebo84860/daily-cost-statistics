@@ -7,7 +7,7 @@ package com.yeapoo.statistics.constant;
  *
  **/
 public enum CodeEnum {
-    SUCCESS(0, "成功"),
+    SUCCESS(0, "操作成功"),
     SYSTEM_ERROR(1, "服务器错误，请稍后！"),
     PARAMS_ERROR(2, "参数错误，请重试"),
     ACCOUNT_EXIST(3, "该用户名已经存在"),

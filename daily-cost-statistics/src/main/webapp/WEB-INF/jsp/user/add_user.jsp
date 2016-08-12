@@ -11,6 +11,7 @@
     <link href="${ctx}/static/css/index.css" rel="stylesheet">
 
     <script src="${ctx}/static/js/jquery/jquery.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/layer/layer.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/user/add_user.js" type="text/javascript"></script>
 </head>
 <body>

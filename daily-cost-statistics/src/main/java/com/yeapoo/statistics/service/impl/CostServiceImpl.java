@@ -7,6 +7,7 @@ import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.base.Pagination;
 import com.yeapoo.statistics.controller.vo.CostListVO;
 import com.yeapoo.statistics.entity.CostEntity;
+import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.mapper.CostEntityMapper;
 import com.yeapoo.statistics.service.CostService;
 import org.apache.commons.collections.CollectionUtils;
@@ -31,11 +32,12 @@ public class CostServiceImpl  implements CostService{
     @Autowired
     private CostEntityMapper costEntityMapper;
 
-    public BaseSingleResponse<CostEntity> addOrUpdateCost(CostEntity costEntity) {
+    public BaseSingleResponse<CostEntity> addOrUpdateCost(CostEntity costEntity, UserEntity user) {
         BaseSingleResponse<CostEntity> baseSingleResponse = new BaseSingleResponse<CostEntity>();
         try {
             if (costEntity!=null){
                 costEntity.setUpdateTime(new Date());
+                costEntity.setUpdateBy(user.getUsername());
                 if (costEntity.getCostTime()==null){
                     costEntity.setCostTime(new Date());
                 }
@@ -43,12 +45,31 @@ public class CostServiceImpl  implements CostService{
                     costEntityMapper.updateByPrimaryKeySelective(costEntity);
                 }else {
                     costEntity.setCreateTime(new Date());
+                    costEntity.setCreateBy(user.getUsername());
                     costEntityMapper.insert(costEntity);
                 }
                 baseSingleResponse.setResult(costEntity);
             }
         } catch (Exception e) {
             logger.error("addOrUpdateCost error msg : ");
+            baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
+            baseSingleResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
+            e.printStackTrace();
+        }
+        return baseSingleResponse;
+    }
+
+    @Override
+    public BaseSingleResponse modifyCostStatus(CostEntity costEntity,UserEntity user) {
+        BaseSingleResponse<CostEntity> baseSingleResponse = new BaseSingleResponse<CostEntity>();
+        try {
+            if (costEntity!=null){
+                costEntity.setUpdateTime(new Date());
+                costEntity.setUpdateBy(user.getUsername());
+                costEntityMapper.updateByPrimaryKeySelective(costEntity);
+            }
+        } catch (Exception e) {
+            logger.error("modifyCostStatus error msg : ");
             baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
             baseSingleResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
             e.printStackTrace();

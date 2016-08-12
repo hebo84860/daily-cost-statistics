@@ -56,7 +56,7 @@ public class CostController {
         try {
             UserEntity user = (UserEntity) request.getSession().getAttribute("user");
             if (user==null){
-                baseListResponse.setCode(CodeEnum.SYSTEM_ERROR);
+                baseListResponse.setCode(CodeEnum.LOGIN_ERROR);
                 baseListResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
                 return baseListResponse;
             }
@@ -81,17 +81,14 @@ public class CostController {
         try {
             UserEntity user = (UserEntity) request.getSession().getAttribute("user");
             if (user==null){
-                baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
+                baseSingleResponse.setCode(CodeEnum.LOGIN_ERROR);
                 baseSingleResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
                 return baseSingleResponse;
             }
 //            if (costListParam.getCostAmount()==null || costListParam.get)
-            costListParam.setUpdateBy(user.getUsername());
             if (StringUtils.isNotBlank(costListParam.getCostTimeStr()))
                 costListParam.setCostTime(DateUtil.string2Date(costListParam.getCostTimeStr(), DateUtil.FORMAT_DATE));
-            if (costListParam.getId()==null)
-                costListParam.setCreateBy(user.getUsername());
-            baseSingleResponse = costService.addOrUpdateCost(costListParam.getCostEntity());
+            baseSingleResponse = costService.addOrUpdateCost(costListParam.getCostEntity(),user);
             baseSingleResponse.setMessage("操作成功！");
         } catch (Exception e) {
             baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
@@ -99,6 +96,34 @@ public class CostController {
             e.printStackTrace();
         }
         return baseSingleResponse;
+    }
+
+    @ResponseBody
+    @RequestMapping("/modifyCostStatus")
+    public BaseSingleResponse modifyCostStatus(HttpServletRequest request, CostListParam costListParam) {
+        BaseSingleResponse baseSingleResponse = new BaseSingleResponse();
+
+        try {
+            logger.info("modifyCostStatus paramsId = {}",costListParam.getId());
+            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            if (user==null){
+                baseSingleResponse.setCode(CodeEnum.LOGIN_ERROR);
+                baseSingleResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
+                return baseSingleResponse;
+            }
+            if (costListParam.getId()==null || costListParam.getStatus()==null){
+                baseSingleResponse.setCode(CodeEnum.PARAMS_ERROR);
+                baseSingleResponse.setMessage(CodeEnum.PARAMS_ERROR.getValueStr());
+                return baseSingleResponse;
+            }
+            baseSingleResponse = costService.modifyCostStatus(costListParam.getCostEntity(),user);
+        } catch (Exception e) {
+            baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
+            baseSingleResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
+            e.printStackTrace();
+        }
+
+        return  baseSingleResponse;
     }
 
 }

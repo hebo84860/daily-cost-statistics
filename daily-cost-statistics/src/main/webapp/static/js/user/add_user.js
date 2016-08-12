@@ -1,9 +1,5 @@
 $(document).ready(function(){
 
-    //$("#username").off().on().blur(function(){
-    //    validUsernameRepeat($("#username").val());
-    //});
-
     $("#submitButton").off().on().click(function(){
         ajaxAddUser();
     }) ;
@@ -13,7 +9,7 @@ $(document).ready(function(){
     $(".span-prompt").off().on().blur(function(){
         var usernameReg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
         var passwordReg = /^[a-zA-Z]\w{5,17}$/;
-        if($(this).attr("id")=='username' && usernameReg.test($(this).val())){
+        if($(this).attr("id")=='username'){
             if($(this).val() && usernameReg.test($(this).val()))
                 validUsernameRepeat($("#username").val());
             if(!$(this).val() || !usernameReg.test($(this).val())){

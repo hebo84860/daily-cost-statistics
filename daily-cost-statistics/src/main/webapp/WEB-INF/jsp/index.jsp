@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="templatemo-content-container" style=" height:660px;line-height:660px;text-align:center;overflow:hidden;" >
-            <h1>欢迎登陆yeapoo后台管理系统</h1>
+            <h1>欢迎登陆消费后台管理系统</h1>
             </div>
             <%@ include file="../common/footer.jsp"%>
     </div>

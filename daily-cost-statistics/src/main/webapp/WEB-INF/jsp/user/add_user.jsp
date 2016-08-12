@@ -22,7 +22,6 @@
         <div class="templatemo-content-container">
             <div class="templatemo-content-widget white-bg">
                 <h2 class="margin-bottom-10">注册会员</h2>
-                <%--<form action="index.html" class="templatemo-login-form" method="post" enctype="multipart/form-data">--%>
                     <div class="row form-group">
                         <div class="col-lg-6 col-md-6 form-group">
                             <label for="username">账号名称</label>
@@ -69,7 +68,7 @@
                     <div class="row form-group">
                         <div class="col-lg-12 form-group">
                             <label class="control-label" for="comment">备注</label>
-                            <textarea class="form-control" id="comment" rows="3"></textarea>
+                            <textarea class="form-control" id="comment" rows="3" cols=""></textarea>
                         </div>
                     </div>
                     <div class="form-group text-right">
@@ -82,8 +81,5 @@
     </div>
 </div>
 
-<!-- JS -->
-<%--<script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script> --%> <!-- http://markusslima.github.io/bootstrap-filestyle/ -->
-<%--<script type="text/javascript" src="js/templatemo-script.js"></script>  --%>      <!-- Templatemo Script -->
 </body>
 </html>

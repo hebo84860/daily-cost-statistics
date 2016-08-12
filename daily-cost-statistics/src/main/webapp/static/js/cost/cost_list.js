@@ -73,12 +73,42 @@ function saveOrUpdateCost(){
 
 function showAddDiv(id){
 
-    $('#dialogCost').dialog({
-        title: '新增消费记录',
-        width: 600,
-        height: 400,
-        modal: 'true'
-    });
+    if(id){
+        $('#dialogCost').dialog({
+            title: '修改消费记录',
+            width: 600,
+            height: 400,
+            modal: 'true'
+        });
+        var rowData = $('#costList').jqGrid('getRowData', id);
+        $("#addId").val(id);
+        $("#costTypeAdd").val(rowData.costType);
+        $("#costDetailAdd").val(rowData.costDetail);
+        $("#statusAdd").val(rowData.status);
+        $("#startTime").val(rowData.costTimeStr);
+        $("#costAmount").val(rowData.costAmount);
+        $("#costBudget").val(rowData.costBudget);
+        $("#costUserName").val(rowData.costUserName);
+        $("#costPhone").val(rowData.costPhone);
+        $("#description").val(rowData.description);
+    }else{
+        $('#dialogCost').dialog({
+            title: '新建消费记录',
+            width: 600,
+            height: 400,
+            modal: 'true'
+        });
+        $("#addId").val('');
+        $("#costTypeAdd").val('GROUP');
+        $("#costDetailAdd").val('FOOD');
+        $("#statusAdd").val('VALID');
+        $("#startTime").val('');
+        $("#costAmount").val('');
+        $("#costBudget").val('');
+        $("#costUserName").val('');
+        $("#costPhone").val('');
+        $("#description").val('');
+    }
 }
 
 function hideAddDiv(){
@@ -99,84 +129,106 @@ function initGrid() {
         url : "ajaxQueryCostList",
         datatype : "json",
         mtype : "POST",
-        colNames : ['编号','消费详情','消费金额','消费者','消费时间','消费描述','消费记录状态','消费记录状态','消费记录类型','创建时间','创建人',"修改时间","修改人","操作"],
+        colNames : ['编号','消费详情Detail','消费详情','消费金额','预算','消费者','手机号','消费时间','消费描述','消费记录状态Status','消费记录状态',
+            '消费记录类型Type','消费记录类型','创建时间','创建人',"修改时间","修改人","操作"],
         colModel : [
             {
                 name : 'id',
                 index : 'id',
                 align : 'center',
                 sortable:false
+                },{
+                name : 'costDetail',
+                index : 'costDetail',
+                align : 'center',
+                hidden : true,
+                sortable:false
                 }, {
-                name : 'costDetailStr',
-                index : 'costDetailStr',
-                align : 'center',
-                //width :220,
-                sortable:false
-            },{
-                name : 'costAmount',
-                index : 'costAmount',
-                align : 'center',
-                sortable:false
-            }, {
-                name : 'costUserName',
-                index : 'costUserName',
-                align : 'center',
-                sortable:false
-            }, {
-                name : 'costTimeStr',
-                index : 'costTimeStr',
-                align : 'center',
-                sortable:false
-            }, {
-                name : 'description',
-                index : 'description',
-                align : 'center',
-                sortable : false
-            }, {
-                name : 'status',
-                index : 'status',
-                align : 'center',
-                sortable : false,
-                hidden: true
-            },{
-                name : 'statusStr',
-                index : 'statusStr',
-                align : 'center',
-                cellattr: addStatusCellAttr,
-                sortable : false
-            },{
-                name : 'costTypeStr',
-                index : 'costTypeStr',
-                align : 'center',
-                sortable : false
-            },{
-                name : 'createTimeStr',
-                index : 'createTimeStr',
-                align : 'center',
-                sortable:false
-            }, {
-                name : 'createBy',
-                index : 'createBy',
-                align : 'center',
-                sortable:false
-            }, {
-                name : 'updateTimeStr',
-                index : 'updateTimeStr',
-                align : 'center',
-                sortable:false
-            }, {
-                name : 'updateBy',
-                index : 'updateBy',
-                align : 'center',
-                //hidden : true,
-                sortable:false
-            }, {
-                name : 'operate',
-                index : 'operate',
-                align : 'center',
-                sortable:false
-            }
-        ],
+                    name : 'costDetailStr',
+                    index : 'costDetailStr',
+                    align : 'center',
+                    sortable:false
+                },{
+                    name : 'costAmount',
+                    index : 'costAmount',
+                    align : 'center',
+                    sortable:false
+                }, {
+                    name : 'costBudget',
+                    index : 'costBudget',
+                    align : 'center',
+                    sortable:false
+                },{
+                    name : 'costUserName',
+                    index : 'costUserName',
+                    align : 'center',
+                    sortable:false
+                }, {
+                    name : 'costPhone',
+                    index : 'costPhone',
+                    align : 'center',
+                    sortable:false
+                },{
+                    name : 'costTimeStr',
+                    index : 'costTimeStr',
+                    align : 'center',
+                    sortable:false
+                }, {
+                    name : 'description',
+                    index : 'description',
+                    align : 'center',
+                    sortable : false
+                }, {
+                    name : 'status',
+                    index : 'status',
+                    align : 'center',
+                    sortable : false,
+                    hidden: true
+                },{
+                    name : 'statusStr',
+                    index : 'statusStr',
+                    align : 'center',
+                    cellattr: addStatusCellAttr,
+                    sortable : false
+                },{
+                    name : 'costType',
+                    index : 'costType',
+                    align : 'center',
+                    hidden : true,
+                    sortable : false
+                },{
+                    name : 'costTypeStr',
+                    index : 'costTypeStr',
+                    align : 'center',
+                    sortable : false
+                },{
+                    name : 'createTimeStr',
+                    index : 'createTimeStr',
+                    align : 'center',
+                    sortable:false
+                }, {
+                    name : 'createBy',
+                    index : 'createBy',
+                    align : 'center',
+                    sortable:false
+                }, {
+                    name : 'updateTimeStr',
+                    index : 'updateTimeStr',
+                    align : 'center',
+                    sortable:false
+                }, {
+                    name : 'updateBy',
+                    index : 'updateBy',
+                    align : 'center',
+                    //hidden : true,
+                    sortable:false
+                }, {
+                    name : 'operate',
+                    index : 'operate',
+                    align : 'center',
+                    sortable:false
+                }
+            ],
         rowNum:10,            //每页显示记录数
         autowidth: true,      //自动匹配宽度
         pager: '#pager',      //表格数据关联的分页条，html元素
@@ -238,7 +290,8 @@ function addStatusCellAttr(rowId, val, rawObject, cm, rdata) {
 function getCostListParams(){
     return {
         'costDetail' : $("#costDetail").val(),
-        'costType' : $("#costType").val()
+        'costType' : $("#costType").val(),
+        'status' : $("#status").val()
     }
 }
 /**
@@ -257,18 +310,18 @@ function syncCostBudget(){
 
 //修改消费状态
 function modifyCostStatus(id, status, validStatusStr) {
-    var gnl;
     if (validStatusStr=="有效") {
         status = "INVALID";
-        gnl = layer.prompt({
+        layer.prompt({
             title: '设为无效，请填写原因。',
-            formType: 1 //prompt风格，支持0-2
+            formType: 2 //prompt风格，支持0-2
         }, function(reason){
             ajaxModifyCostStatus(id, status,reason);
         });
     }else{
         status = "VALID";
-        gnl = layer.confirm("确认将该记录设为有效？",{btn: ['确定','取消'] },
+        /*gnl = */
+        layer.confirm("确认将该记录设为有效？",{btn: ['确定','取消'] },
                 function(){
                     ajaxModifyCostStatus(id, status,'');
                     //layer.close(gnl);

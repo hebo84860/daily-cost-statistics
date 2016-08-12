@@ -160,6 +160,22 @@ public class CostListVO implements Serializable {
         costEntity.setStatus(status);
     }
 
+    public void setCostPhone(String costPhone) {
+        costEntity.setCostPhone(costPhone);
+    }
+
+    public BigDecimal getCostBudget() {
+        return costEntity.getCostBudget();
+    }
+
+    public void setCostBudget(BigDecimal costBudget) {
+        costEntity.setCostBudget(costBudget);
+    }
+
+    public String getCostPhone() {
+        return costEntity.getCostPhone();
+    }
+
     public void setCreateBy(String createBy) {
         costEntity.setCreateBy(createBy);
     }

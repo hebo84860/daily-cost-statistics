@@ -169,6 +169,9 @@ public class CostController {
                 baseSingleResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
                 return baseSingleResponse;
             }
+            if (!ConstantEnum.SUPER_ADMIN.getValueStr().equals(user.getJob())){
+                costListParam.setCreateBy(user.getUsername());
+            }
             BaseQueryRequest<CostListParam> queryRequest = new BaseQueryRequest<CostListParam>(costListParam);
             baseSingleResponse = costService.countCostAmount(queryRequest);
         } catch (Exception e) {

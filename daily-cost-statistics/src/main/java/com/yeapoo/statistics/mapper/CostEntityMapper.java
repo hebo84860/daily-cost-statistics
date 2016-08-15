@@ -2,8 +2,11 @@ package com.yeapoo.statistics.mapper;
 
 
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
+import com.yeapoo.statistics.controller.param.CostListParam;
+import com.yeapoo.statistics.controller.vo.cost.AmountMouthVO;
 import com.yeapoo.statistics.entity.CostEntity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CostEntityMapper {
@@ -15,7 +18,11 @@ public interface CostEntityMapper {
 
     int updateByPrimaryKeySelective(CostEntity record);
 
-    int countCost(BaseQueryRequest<CostEntity> queryRequest );
-    List<CostEntity> queryCostList(BaseQueryRequest<CostEntity> queryRequest );
+    int countCost(BaseQueryRequest<CostListParam> queryRequest );
+    List<CostEntity> queryCostList(BaseQueryRequest<CostListParam> queryRequest );
 
+    BigDecimal totalCostAmount(BaseQueryRequest<CostListParam> queryRequest);
+
+
+    List<AmountMouthVO> countCostAmountMouth(BaseQueryRequest<CostListParam> queryRequest);
 }

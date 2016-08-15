@@ -29,14 +29,15 @@
                 <a href="${ctx}/cost/toCostList" class="first-menu-index"><i class="fa fa-home fa-fw"></i>消费</a>
             </li>
             <li class="first-menu">
-                <a href="${ctx}/ps/toStatistics?type=count" class="first-menu-chart"><i class="fa fa-bar-chart fa-fw"></i>统计图表</a>
+                <a href="${ctx}/cost/toCostStatistics?type=costAmount" class="first-menu-chart"><i class="fa fa-bar-chart fa-fw"></i>统计图表</a>
                 <ul class="second-menu-ul" >
+                    <li class="li-costAmount"><a href="${ctx}/cost/toCostStatistics?type=costAmount">消费统计</a></li>
                     <li class="li-count"><a href="${ctx}/ps/toStatistics?type=count">数量统计</a></li>
-                    <li class="li-amount"><a href="${ctx}/ps/toStatistics?type=amount">金额统计</a></li>
-                    <li class="li-time"><a href="${ctx}/ps/toStatistics?type=time">销售时间统计</a></li>
-                    <li class="li-member"><a href="${ctx}/ps/toStatistics?type=member">会员统计</a></li>
-                    <li class="li-terminal"><a href="${ctx}/ps/toStatistics?type=terminal">购买终端统计</a></li>
-                    <li class="li-map"><a href="${ctx}/ps/toStatistics?type=map">销售分布图</a></li>
+                    <%--<li class="li-amount"><a href="${ctx}/ps/toStatistics?type=amount">金额统计</a></li>--%>
+                    <%--<li class="li-time"><a href="${ctx}/ps/toStatistics?type=time">销售时间统计</a></li>--%>
+                    <%--<li class="li-member"><a href="${ctx}/ps/toStatistics?type=member">会员统计</a></li>--%>
+                    <%--<li class="li-terminal"><a href="${ctx}/ps/toStatistics?type=terminal">购买终端统计</a></li>--%>
+                    <%--<li class="li-map"><a href="${ctx}/ps/toStatistics?type=map">销售分布图</a></li>--%>
                 </ul>
             </li>
             <li> <a href="${ctx}/user/toModify" class="first-menu-modify"><i class="fa fa-sliders fa-fw"></i>修改密码</a></li>

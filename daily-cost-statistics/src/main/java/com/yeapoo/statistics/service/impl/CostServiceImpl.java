@@ -5,17 +5,22 @@ import com.yeapoo.statistics.controller.base.BaseListResponse;
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.base.Pagination;
-import com.yeapoo.statistics.controller.vo.CostListVO;
+import com.yeapoo.statistics.controller.param.CostListParam;
+import com.yeapoo.statistics.controller.vo.cost.CostListVO;
+import com.yeapoo.statistics.controller.vo.cost.CostStatisticsVO;
+import com.yeapoo.statistics.controller.vo.cost.AmountMouthVO;
 import com.yeapoo.statistics.entity.CostEntity;
 import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.mapper.CostEntityMapper;
 import com.yeapoo.statistics.service.CostService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,7 +83,7 @@ public class CostServiceImpl  implements CostService{
     }
 
     @Override
-    public BaseListResponse<CostListVO> queryCostList(BaseQueryRequest<CostEntity> queryRequest) {
+    public BaseListResponse<CostListVO> queryCostList(BaseQueryRequest<CostListParam> queryRequest) {
         BaseListResponse<CostListVO> baseListResponse = new BaseListResponse<CostListVO>();
         try {
             List<CostListVO> reVos = new ArrayList<CostListVO>();
@@ -101,4 +106,44 @@ public class CostServiceImpl  implements CostService{
 
         return baseListResponse;
     }
+
+    /**
+     *  消费总金额
+     * @param queryRequest
+     * @return
+     */
+    @Override
+    public BaseSingleResponse<CostStatisticsVO<AmountMouthVO>> countCostAmount(BaseQueryRequest<CostListParam> queryRequest) {
+
+        BaseSingleResponse<CostStatisticsVO<AmountMouthVO>> baseSingleResponse = new BaseSingleResponse<CostStatisticsVO<AmountMouthVO>>();
+        try {
+            CostStatisticsVO<AmountMouthVO> costStatisticsVO = new CostStatisticsVO<AmountMouthVO>();
+            List<AmountMouthVO> statisticsVOs = costEntityMapper.countCostAmountMouth(queryRequest);
+            BigDecimal totalCount  = costEntityMapper.totalCostAmount(queryRequest);
+            if (CollectionUtils.isNotEmpty(statisticsVOs)){
+                statisticsVOs = convertDateStr(statisticsVOs);
+            }
+            costStatisticsVO.setCostTotal(totalCount);
+            costStatisticsVO.setStaticticsVOs(statisticsVOs);
+            baseSingleResponse.setResult(costStatisticsVO);
+        } catch (Exception e) {
+            logger.error("totalCostAmount error msg : ");
+            baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
+            baseSingleResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
+            e.printStackTrace();
+        }
+        return baseSingleResponse;
+    }
+
+    private List<AmountMouthVO> convertDateStr(List<AmountMouthVO> statisticsVOs) {
+        List<AmountMouthVO> reList = new ArrayList<AmountMouthVO>();
+        for (AmountMouthVO vo : statisticsVOs){
+            if (StringUtils.isNotBlank(vo.getMouth()) && vo.getMouth().length()>4){
+                vo.setMouth(vo.getMouth().substring(0, 4) + "-" + vo.getMouth().substring(4));
+            }
+            reList.add(vo);
+        }
+        return reList;
+    }
+
 }

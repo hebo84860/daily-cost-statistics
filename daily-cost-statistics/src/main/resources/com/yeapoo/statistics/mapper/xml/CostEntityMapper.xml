@@ -116,6 +116,12 @@
       <if test="condition.createBy!=null and condition.createBy!=''">
         AND create_by = #{condition.createBy}
       </if>
+      <if test="condition.costTimeStart!=null and condition.costTimeStart!=''">
+        AND cost_time &gt;= #{condition.costTimeStart}
+      </if>
+      <if test="condition.costTimeEnd!=null and condition.costTimeEnd!=''">
+        AND cost_time &lt;= #{condition.costTimeEnd}
+      </if>
     </if>
   </sql>
   <!-- 分页查询 消费记录 -->
@@ -125,7 +131,7 @@
     <where>
       <include refid="Base_Where_Condition"/>
     </where>
-    ORDER BY cost_time,create_time DESC
+    ORDER BY cost_time DESC
     <if test="pagination!=null">
       limit #{pagination.stratRecodes}, #{pagination.rows}
     </if>
@@ -136,6 +142,24 @@
     <where>
       <include refid="Base_Where_Condition"/>
     </where>
+  </select>
+
+  <!--条件统计消费总额-->
+  <select id="totalCostAmount" parameterType="com.yeapoo.statistics.controller.base.BaseQueryRequest" resultType="java.math.BigDecimal">
+    SELECT SUM(cost_amount) FROM cost
+    <where>
+      <include refid="Base_Where_Condition"/>
+    </where>
+  </select>
+  <!--按月统计消费-->
+  <select id="countCostAmountMouth" parameterType="com.yeapoo.statistics.controller.base.BaseQueryRequest"
+          resultType="com.yeapoo.statistics.controller.vo.cost.AmountMouthVO">
+    SELECT SUM(cost_amount) mouthCost, DATE_FORMAT(cost_time,'%Y%m') mouth
+    FROM cost
+    <where>
+      <include refid="Base_Where_Condition"/>
+    </where>
+    GROUP BY mouth ORDER BY mouth
   </select>
 
 </mapper>

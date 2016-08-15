@@ -1,4 +1,4 @@
-package com.yeapoo.statistics.controller.vo;
+package com.yeapoo.statistics.controller.vo.cost;
 
 import com.yeapoo.statistics.constant.CostDetail;
 import com.yeapoo.statistics.constant.CostType;

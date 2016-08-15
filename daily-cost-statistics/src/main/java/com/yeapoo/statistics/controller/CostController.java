@@ -9,7 +9,9 @@ import com.yeapoo.statistics.controller.base.BaseListResponse;
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.param.CostListParam;
-import com.yeapoo.statistics.controller.vo.CostListVO;
+import com.yeapoo.statistics.controller.vo.cost.AmountMouthVO;
+import com.yeapoo.statistics.controller.vo.cost.CostListVO;
+import com.yeapoo.statistics.controller.vo.cost.CostStatisticsVO;
 import com.yeapoo.statistics.entity.CostEntity;
 import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.service.CostService;
@@ -52,7 +54,7 @@ public class CostController {
     @RequestMapping("/ajaxQueryCostList")
     public BaseListResponse<CostListVO> ajaxQueryCostList(HttpServletRequest request, CostListParam costListParam){
         BaseListResponse<CostListVO> baseListResponse = new BaseListResponse<CostListVO>();
-        logger.info("ajaxQueryCostList start params = {} ",costListParam);
+        logger.info("ajaxQueryCostList start params = {} ", costListParam);
         try {
             UserEntity user = (UserEntity) request.getSession().getAttribute("user");
             if (user==null){
@@ -63,8 +65,8 @@ public class CostController {
             if (!ConstantEnum.SUPER_ADMIN.getValueStr().equals(user.getJob())){
                 costListParam.setCreateBy(user.getUsername());
             }
-            BaseQueryRequest<CostEntity> queryRequest =
-                    new BaseQueryRequest<CostEntity>(costListParam.getPagination(), costListParam.getCostEntity());
+            BaseQueryRequest<CostListParam> queryRequest =
+                    new BaseQueryRequest<CostListParam>(costListParam.getPagination(), costListParam);
             baseListResponse = costService.queryCostList(queryRequest);
         } catch (Exception e) {
             baseListResponse.setCode(CodeEnum.SYSTEM_ERROR);
@@ -117,6 +119,58 @@ public class CostController {
                 return baseSingleResponse;
             }
             baseSingleResponse = costService.modifyCostStatus(costListParam.getCostEntity(),user);
+        } catch (Exception e) {
+            baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
+            baseSingleResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
+            e.printStackTrace();
+        }
+
+        return  baseSingleResponse;
+    }
+
+    /**
+     * 跳转消费统计页
+     * @param model
+     * @param type
+     * @return
+     */
+    @RequestMapping("/toCostStatistics")
+    public String toCostStatistics(Model model, String type){
+        try {
+            logger.info(" this is log4j log toCostStatisticsPage start type={}", type);
+            model.addAttribute("nav", ConstantEnum.STATISTICS.getCodeInt());
+            model.addAttribute("type", type);
+            model.addAttribute("statusEnum", Status.values());
+            model.addAttribute("costTypeEnum", CostType.values());
+            model.addAttribute("costDetailEnum", CostDetail.values());
+            logger.info(" this is log4j log toCostStatisticsPage end");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "cost/cost_statistics";
+    }
+
+    /**
+     * 个人消费总额统计
+     * @param request
+     * @param costListParam
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/countCostAmount")
+    public BaseSingleResponse<CostStatisticsVO<AmountMouthVO>> ajaxCountCostAmount(HttpServletRequest request, CostListParam costListParam) {
+        BaseSingleResponse<CostStatisticsVO<AmountMouthVO>> baseSingleResponse = new BaseSingleResponse<CostStatisticsVO<AmountMouthVO>>();
+
+        try {
+            logger.info("ajax Count Cost Amount params = {}",costListParam);
+            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            if (user==null){
+                baseSingleResponse.setCode(CodeEnum.LOGIN_ERROR);
+                baseSingleResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
+                return baseSingleResponse;
+            }
+            BaseQueryRequest<CostListParam> queryRequest = new BaseQueryRequest<CostListParam>(costListParam);
+            baseSingleResponse = costService.countCostAmount(queryRequest);
         } catch (Exception e) {
             baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
             baseSingleResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());

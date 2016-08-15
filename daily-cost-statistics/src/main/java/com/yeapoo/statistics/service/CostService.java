@@ -3,7 +3,10 @@ package com.yeapoo.statistics.service;
 import com.yeapoo.statistics.controller.base.BaseListResponse;
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
-import com.yeapoo.statistics.controller.vo.CostListVO;
+import com.yeapoo.statistics.controller.param.CostListParam;
+import com.yeapoo.statistics.controller.vo.cost.CostListVO;
+import com.yeapoo.statistics.controller.vo.cost.CostStatisticsVO;
+import com.yeapoo.statistics.controller.vo.cost.AmountMouthVO;
 import com.yeapoo.statistics.entity.CostEntity;
 import com.yeapoo.statistics.entity.UserEntity;
 
@@ -17,6 +20,8 @@ public interface CostService {
 
     BaseSingleResponse modifyCostStatus(CostEntity costEntity,UserEntity user);
 
-    BaseListResponse<CostListVO> queryCostList(BaseQueryRequest<CostEntity> queryRequest);
+    BaseListResponse<CostListVO> queryCostList(BaseQueryRequest<CostListParam> queryRequest);
+
+    BaseSingleResponse<CostStatisticsVO<AmountMouthVO>> countCostAmount(BaseQueryRequest<CostListParam> queryRequest);
 
 }

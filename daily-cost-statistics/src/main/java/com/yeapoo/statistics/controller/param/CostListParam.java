@@ -19,8 +19,18 @@ public class CostListParam implements Serializable, BaseParam {
     private static final long serialVersionUID = 4899411666660399100L;
 
     private CostEntity costEntity = new CostEntity();
-
+    /**
+     * 消费时间
+     */
     private String costTimeStr;
+    /**
+     * 消费统计查询开始时间
+     */
+    private String costTimeStart;
+    /**
+     * 消费统计查询结束时间
+     */
+    private String costTimeEnd;
 
     private Pagination pagination = new Pagination();
 
@@ -74,6 +84,22 @@ public class CostListParam implements Serializable, BaseParam {
 
     public void setReason(String reason) {
         costEntity.setReason(reason);
+    }
+
+    public String getCostTimeStart() {
+        return costTimeStart;
+    }
+
+    public void setCostTimeStart(String costTimeStart) {
+        this.costTimeStart = costTimeStart;
+    }
+
+    public String getCostTimeEnd() {
+        return costTimeEnd;
+    }
+
+    public void setCostTimeEnd(String costTimeEnd) {
+        this.costTimeEnd = costTimeEnd;
     }
 
     public void setCostAmount(BigDecimal costAmount) {

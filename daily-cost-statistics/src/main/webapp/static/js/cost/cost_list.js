@@ -6,7 +6,6 @@ $(document).ready(function() {
     //    content: '\<\div style="padding:20px;">自定义内容\<\/div>'
     //});
     initGrid();
-    setDefaultTime();
     $("#searchCostList").off().on().click(function(){
         queryCostList();
     });
@@ -102,7 +101,7 @@ function showAddDiv(id){
         $("#costTypeAdd").val('GROUP');
         $("#costDetailAdd").val('FOOD');
         $("#statusAdd").val('VALID');
-        $("#startTime").val('');
+        setDefaultTime();
         $("#costAmount").val('');
         $("#costBudget").val('');
         $("#costUserName").val('');

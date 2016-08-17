@@ -145,7 +145,7 @@ function getCountCostParams(){
  */
 function setDefaultTime() {
     var curDate = new Date();
-    var startDate = (curDate.getFullYear()-1) + "/" + (curDate.getMonth() + 1);
+    var startDate = (curDate.getFullYear()-1) + "/" + (curDate.getMonth() + 1)+ '/01';
     $(".startTime").val(getFormatDate(new Date(startDate), 'yyyy-MM-dd'));
     $('.endTime').val(getFormatDate(new Date(), 'yyyy-MM-dd'));
 }

@@ -1,10 +1,4 @@
 $(document).ready(function() {
-    //layer.open({
-    //    type: 1,
-    //    area: ['600px', '360px'],
-    //    shadeClose: true, //点击遮罩关闭
-    //    content: '\<\div style="padding:20px;">自定义内容\<\/div>'
-    //});
     initGrid();
     $("#searchCostList").off().on().click(function(){
         queryCostList();
@@ -55,7 +49,7 @@ function saveOrUpdateCost(){
             costPhone:costPhone,
             costAmount:costAmount,
             costBudget:costBudget,
-            costTimeStr:$("#startTime").val(),
+            costTimeStr:$("#costTime").val(),
             description:$("#description").val(),
             id:$("#addId").val()
         },
@@ -84,7 +78,7 @@ function showAddDiv(id){
         $("#costTypeAdd").val(rowData.costType);
         $("#costDetailAdd").val(rowData.costDetail);
         $("#statusAdd").val(rowData.status);
-        $("#startTime").val(rowData.costTimeStr);
+        $("#costTime").val(rowData.costTimeStr);
         $("#costAmount").val(rowData.costAmount);
         $("#costBudget").val(rowData.costBudget);
         $("#costUserName").val(rowData.costUserName);
@@ -297,9 +291,10 @@ function getCostListParams(){
  * 设置默认时间
  */
 function setDefaultTime() {
-    var curDate = new Date();
-    var startDate = (curDate.getFullYear()-1) + "/" + (curDate.getMonth() + 1);
-    $("#startTime").val(getFormatDate(new Date(startDate), 'yyyy-MM-dd'));
+    $("#costTime").val(getFormatDate(new Date(), 'yyyy-MM-dd'));
+    //var curDate = new Date();
+    //var startDate = (curDate.getFullYear()-1) + "/" + (curDate.getMonth() + 1);
+    //$(".startTime").val(getFormatDate(new Date(startDate), 'yyyy-MM-dd'));
     //$('.endTime').val(getFormatDate(new Date(), 'yyyy-MM-dd'));
 }
 

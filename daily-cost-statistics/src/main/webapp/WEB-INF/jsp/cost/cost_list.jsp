@@ -117,7 +117,7 @@
                 </td>
                 <td align="right">消费时间：</td>
                 <td>
-                    <input type="text" id="startTime" class="cssInput" readonly/>
+                    <input type="text" id="costTime" class="cssInput" readonly/>
                 </td>
             </tr>
             <tr height="35">

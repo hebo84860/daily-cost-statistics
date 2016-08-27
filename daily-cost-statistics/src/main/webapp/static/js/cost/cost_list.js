@@ -101,7 +101,8 @@ function showAddDiv(id){
         $("#costTypeAdd").val('GROUP');
         $("#costDetailAdd").val('FOOD');
         $("#statusAdd").val('VALID');
-        setDefaultTime();
+        $("#startTime").val(getFormatDate(new Date(), 'yyyy-MM-dd'));
+        //setDefaultTime();
         $("#costAmount").val('');
         $("#costBudget").val('');
         $("#costUserName").val('');

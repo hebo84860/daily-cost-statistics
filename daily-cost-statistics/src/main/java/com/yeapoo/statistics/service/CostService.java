@@ -4,6 +4,7 @@ import com.yeapoo.statistics.controller.base.BaseListResponse;
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.param.CostListParam;
+import com.yeapoo.statistics.controller.vo.cost.CostDiagramVO;
 import com.yeapoo.statistics.controller.vo.cost.CostListVO;
 import com.yeapoo.statistics.controller.vo.cost.CostStatisticsVO;
 import com.yeapoo.statistics.controller.vo.cost.AmountMouthVO;
@@ -24,4 +25,5 @@ public interface CostService {
 
     BaseSingleResponse<CostStatisticsVO<AmountMouthVO>> countCostAmount(BaseQueryRequest<CostListParam> queryRequest);
 
+    BaseListResponse<CostDiagramVO> countCostDiagram(BaseQueryRequest<CostListParam> queryRequest);
 }

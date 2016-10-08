@@ -6,6 +6,7 @@ import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.base.Pagination;
 import com.yeapoo.statistics.controller.param.CostListParam;
+import com.yeapoo.statistics.controller.vo.cost.CostDiagramVO;
 import com.yeapoo.statistics.controller.vo.cost.CostListVO;
 import com.yeapoo.statistics.controller.vo.cost.CostStatisticsVO;
 import com.yeapoo.statistics.controller.vo.cost.AmountMouthVO;
@@ -133,6 +134,18 @@ public class CostServiceImpl  implements CostService{
             e.printStackTrace();
         }
         return baseSingleResponse;
+    }
+
+    @Override
+    public BaseListResponse<CostDiagramVO> countCostDiagram(BaseQueryRequest<CostListParam> queryRequest) {
+        BaseListResponse<CostDiagramVO> listResponse = new BaseListResponse<CostDiagramVO>();
+        try {
+            List<CostDiagramVO> list = costEntityMapper.countCostDiagram(queryRequest);
+            listResponse.setResults(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listResponse;
     }
 
     private List<AmountMouthVO> convertDateStr(List<AmountMouthVO> statisticsVOs) {

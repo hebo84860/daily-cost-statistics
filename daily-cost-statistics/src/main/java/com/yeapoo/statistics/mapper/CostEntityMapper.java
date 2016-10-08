@@ -4,6 +4,7 @@ package com.yeapoo.statistics.mapper;
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.param.CostListParam;
 import com.yeapoo.statistics.controller.vo.cost.AmountMouthVO;
+import com.yeapoo.statistics.controller.vo.cost.CostDiagramVO;
 import com.yeapoo.statistics.entity.CostEntity;
 
 import java.math.BigDecimal;
@@ -25,4 +26,6 @@ public interface CostEntityMapper {
 
 
     List<AmountMouthVO> countCostAmountMouth(BaseQueryRequest<CostListParam> queryRequest);
+
+    List<CostDiagramVO> countCostDiagram(BaseQueryRequest<CostListParam> queryRequest);
 }

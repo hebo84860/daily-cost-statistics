@@ -32,6 +32,7 @@
                 <a href="${ctx}/cost/toCostStatistics?type=costAmount" class="first-menu-chart"><i class="fa fa-bar-chart fa-fw"></i>统计图表</a>
                 <ul class="second-menu-ul" >
                     <li class="li-costAmount"><a href="${ctx}/cost/toCostStatistics?type=costAmount">消费统计</a></li>
+                    <li class="li-costDiagram"><a href="${ctx}/cost/toCostStatistics?type=costDiagram">消费分布</a></li>
                     <li class="li-count"><a href="${ctx}/ps/toStatistics?type=count">数量统计</a></li>
                     <%--<li class="li-amount"><a href="${ctx}/ps/toStatistics?type=amount">金额统计</a></li>--%>
                     <%--<li class="li-time"><a href="${ctx}/ps/toStatistics?type=time">销售时间统计</a></li>--%>

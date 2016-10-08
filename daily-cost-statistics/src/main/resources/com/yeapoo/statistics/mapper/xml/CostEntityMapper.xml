@@ -162,4 +162,15 @@
     GROUP BY mouth ORDER BY mouth
   </select>
 
+  <!--消费分布统计消费-->
+  <select id="countCostDiagram" parameterType="com.yeapoo.statistics.controller.base.BaseQueryRequest"
+          resultType="com.yeapoo.statistics.controller.vo.cost.CostDiagramVO">
+    SELECT cost_detail costDetailStr, SUM(cost_amount) totalAmount
+    FROM cost
+    <where>
+      <include refid="Base_Where_Condition"/>
+    </where>
+    GROUP BY costDetailStr
+  </select>
+
 </mapper>

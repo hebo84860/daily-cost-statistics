@@ -10,6 +10,9 @@ function chooseEcharts(f){
     if (f=="costAmount") {
         $(".li-costAmount").addClass("li-active");
         countCostAmount();
+    } else if (f=="costDiagram") {
+        $(".li-costDiagram").addClass("li-active");
+        countCostDiagram();
     }
 }
 
@@ -121,6 +124,82 @@ function countCostAmount(){
                             data : [
                                 {type : 'average', name: '月平均消费'}
                             ]
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+            myChart.hideLoading();
+        }
+    );
+}
+
+function countCostDiagram(){
+    //$(".date-scope").show();
+    $("#searchButton").attr("flag","countDiagram");
+    require.config({
+        paths: {
+            //echarts: 'http://echarts.baidu.com/build/dist'百度在线地址
+            echarts: '../../../static/js/echarts'
+        }
+    });
+    require(
+        [
+            'echarts',
+            'echarts/chart/pie'
+        ],
+        function (ec) {
+            var myChart = ec.init(document.getElementById('main'));
+            myChart.showLoading({
+                text: '正在努力加载中...'
+            });
+            var datas = [];
+            $.ajaxSettings.async = false;
+            $.ajax({
+                url:'../cost/countCostDiagram',
+                type: 'get',
+                dataType:'json',
+                data:getCountCostParams(),
+                success: function(data){
+                    if (data.results!=null&& data.results.length>0) {
+                        $.each(data.results, function (i, e) {
+                            var data = {value: e.totalAmount,name: e.costDetailStr}
+                            datas.push(data);
+                        });
+                        //$("#costAmount").text(data.result.costTotal);
+                    }else{
+                        datas.push(null);
+                    }
+                }
+            });
+            option = {
+                title : {
+                    text: '消费综合分布',
+                    //subtext: '纯属虚构',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'center',
+                    data: ['饮食','娱乐','购物','房租','其他']
+                },
+                series : [
+                    {
+                        name: '消费详情',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:datas,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
                         }
                     }
                 ]

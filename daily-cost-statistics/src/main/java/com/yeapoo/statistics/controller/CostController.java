@@ -10,6 +10,7 @@ import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.param.CostListParam;
 import com.yeapoo.statistics.controller.vo.cost.AmountMouthVO;
+import com.yeapoo.statistics.controller.vo.cost.CostDiagramVO;
 import com.yeapoo.statistics.controller.vo.cost.CostListVO;
 import com.yeapoo.statistics.controller.vo.cost.CostStatisticsVO;
 import com.yeapoo.statistics.entity.CostEntity;
@@ -181,6 +182,39 @@ public class CostController {
         }
 
         return  baseSingleResponse;
+    }
+
+    /**
+     * 个人消费详情分布统计
+     * @param request
+     * @param costListParam
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/countCostDiagram")
+    public BaseListResponse<CostDiagramVO> ajaxCountCostDiagram(HttpServletRequest request, CostListParam costListParam) {
+        BaseListResponse<CostDiagramVO> listResponse = new BaseListResponse<CostDiagramVO>();
+
+        try {
+            logger.info("ajax Count Cost diagram params = {}",costListParam);
+            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            if (user==null){
+                listResponse.setCode(CodeEnum.LOGIN_ERROR);
+                listResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
+                return listResponse;
+            }
+            if (!ConstantEnum.SUPER_ADMIN.getValueStr().equals(user.getJob())){
+                costListParam.setCreateBy(user.getUsername());
+            }
+            BaseQueryRequest<CostListParam> queryRequest = new BaseQueryRequest<CostListParam>(costListParam);
+            listResponse = costService.countCostDiagram(queryRequest);
+        } catch (Exception e) {
+            listResponse.setCode(CodeEnum.SYSTEM_ERROR);
+            listResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
+            e.printStackTrace();
+        }
+
+        return  listResponse;
     }
 
 }

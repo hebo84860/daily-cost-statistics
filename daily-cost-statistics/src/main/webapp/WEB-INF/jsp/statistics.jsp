@@ -15,8 +15,8 @@
 
     <script type="text/javascript" src="${ctx}/static/js/jquery/jquery.js"></script>
     <!--图表控件-->
-    <script type="text/javascript" src="${ctx}/static/js/echarts.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/echarts.common.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/echarts/echarts.js"></script>
+    <%--<script type="text/javascript" src="${ctx}/static/js/echarts.common.min.js"></script>--%>
     <!--时间控件-->
     <script type="text/javascript" src="${ctx}/static/js/jquery/jquery.datetimepicker.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/common.js"></script>

@@ -18,7 +18,8 @@ function countCostAmount(){
     $("#searchButton").attr("flag","countAmount");
     require.config({
         paths: {
-            echarts: 'http://echarts.baidu.com/build/dist'
+            //echarts: 'http://echarts.baidu.com/build/dist'百度在线地址
+            echarts: '../../../static/js/echarts'
         }
     });
     require(

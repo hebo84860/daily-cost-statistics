@@ -2,7 +2,7 @@ $(document).ready(function(){
     setDefaultTime();
     chooseEcharts($("#flag").val());
     $("#searchButton").off().on().click(function(){
-        countCostAmount($(this).attr("flag"))
+        chooseEcharts($(this).attr("flag"))
     });
 });
 
@@ -18,7 +18,7 @@ function chooseEcharts(f){
 
 function countCostAmount(){
     //$(".date-scope").show();
-    $("#searchButton").attr("flag","countAmount");
+    $("#searchButton").attr("flag","costAmount");
     require.config({
         paths: {
             //echarts: 'http://echarts.baidu.com/build/dist'百度在线地址
@@ -136,7 +136,7 @@ function countCostAmount(){
 
 function countCostDiagram(){
     //$(".date-scope").show();
-    $("#searchButton").attr("flag","countDiagram");
+    $("#searchButton").attr("flag","costDiagram");
     require.config({
         paths: {
             //echarts: 'http://echarts.baidu.com/build/dist'百度在线地址
@@ -168,23 +168,23 @@ function countCostDiagram(){
                         });
                         //$("#costAmount").text(data.result.costTotal);
                     }else{
-                        datas.push(null);
+                        datas.push({value: 0,name: ""});
                     }
                 }
             });
             option = {
                 title : {
-                    text: '消费综合分布',
+                    text: '消费综合分布'
                     //subtext: '纯属虚构',
-                    x:'center'
+                    //x:'center'
                 },
                 tooltip : {
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
-                    orient: 'vertical',
-                    left: 'center',
+                    //orient: 'horizontal',
+                    //top: '200',
                     data: ['饮食','娱乐','购物','房租','其他']
                 },
                 series : [

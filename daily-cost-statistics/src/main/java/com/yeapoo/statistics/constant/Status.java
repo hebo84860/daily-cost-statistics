@@ -8,12 +8,15 @@ package com.yeapoo.statistics.constant;
  */
 public enum Status {
 
-    VALID("有效"),
-    INVALID("无效");
+    CHECK_PENDING("1", "待审核"),
+    VALID("2", "有效"),
+    INVALID("3", "无效");
 
+    private String code;
     private String cnName;
 
-    private Status(String cnName) {
+    private Status(String code, String cnName) {
+        this.code = code;
         this.cnName = cnName;
     }
 

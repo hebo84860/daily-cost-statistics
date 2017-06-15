@@ -9,9 +9,9 @@ $(document).ready(function(){
     $(".span-prompt").off().on().blur(function(){
         var usernameReg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
         var passwordReg = /^[a-zA-Z]\w{5,17}$/;
-        if($(this).attr("id")=='username'){
+        if($(this).attr("id")=='username' || $(this).attr("id")=='recommendUsername'){
             if($(this).val() && usernameReg.test($(this).val()))
-                validUsernameRepeat($("#username").val());
+                validUsernameRepeat($("#username").val(), $(this).attr("id"));
             if(!$(this).val() || !usernameReg.test($(this).val())){
                 $(this).next("span").show();
             }
@@ -32,6 +32,8 @@ $(document).ready(function(){
         $(this).next("span").hide();
         if($(this).attr("id")=='username')
             $("#usernameExist").hide();
+        if($(this).attr("id")=='recommendUsername')
+            $("#recommendUsernameNotExist").hide();
     })
 
 });
@@ -44,6 +46,8 @@ function ajaxAddUser(){
     var nickname = $("#nickname").val();
     var password = $("#password").val();
     var email = $("#email").val();
+    var phone = $("#phone").val();
+    var recommendUsername = $("#recommendUsername").val();
     var inviteCode = $("#inviteCode").val();
     var reg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
     if(!username || !reg.test(username)){
@@ -78,11 +82,21 @@ function ajaxAddUser(){
         $("#password").val("");
         return;
     }
+    if(!phone){
+        layer.alert('请输入联系方式！！',{icon: 5, skin: 'layer-ext-moon'});
+        return;
+    }
+    if(!recommendUsername){
+        layer.alert('请输入推荐人账号！！',{icon: 5, skin: 'layer-ext-moon'});
+        return;
+    }
     paramsJson['username'] = username;
     paramsJson['nickname'] = nickname;
     paramsJson['realname'] = realname;
     paramsJson['password'] = password;
     paramsJson['inviteCode'] = inviteCode;
+    paramsJson['phone'] = phone;
+    paramsJson['recommendUsername'] = recommendUsername;
     if(email)
         paramsJson['email'] = email;
 
@@ -107,7 +121,7 @@ function ajaxAddUser(){
 
 }
 
-function validUsernameRepeat(username){
+function validUsernameRepeat(username, resource){
     if(!username){
         return false;
     }
@@ -119,8 +133,11 @@ function validUsernameRepeat(username){
             username : username
         },
         success: function(data){
-            if(data.status==false && data.code=='ACCOUNT_EXIST'){
+            if(data.status==true && data.code=='ACCOUNT_EXIST' && resource=='username'){
                 $("#usernameExist").show();
+            }
+            if(data.status==true && data.code=='ACCOUNT__NOT_EXIST' && resource=='recommendUsername'){
+                $("#recommendUsernameNotExist").show();
             }
         }
     });

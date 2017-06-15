@@ -60,6 +60,19 @@
                         </div>
                     </div>
                     <div class="row form-group">
+                        <div class="col-lg-6 col-md-6 form-group">
+                            <label for="password">联系方式</label>
+                            <input type="text" class="form-control span-prompt" id="phone" >
+                            <span class="red-display-none">请填写正确格式的手机号。</span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 form-group">
+                            <label for="confirmPassword">推荐人账号</label>
+                            <input type="text" class="form-control span-prompt" id="recommendUsername">
+                            <span class="red-display-none">请输入推荐人账号！</span>
+                            <span class="red-display-none" id="recommendUsernameNotExist">抱歉！该推荐人用户不存在，请重新填写！</span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
                         <div class="col-lg-12 has-warning form-group">
                             <label class="control-label" for="inviteCode">邀请码</label>
                             <input type="text" class="form-control span-prompt" id="inviteCode">

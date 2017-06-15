@@ -16,7 +16,8 @@ public enum CodeEnum {
     ACCOUNT_PASSWORD_ERROR(5, "密码错误"),
     SAVE_FAIL(6, "保存失败"),
     UPDATE_FAIL(7, "修改失败"),
-    LOGIN_ERROR(8, "登录错误，请重新登录！")
+    LOGIN_ERROR(8, "登录错误，请重新登录！"),
+    ACCOUNT_NOT_EXIST(10, "该用户名已经存在"),
     ;
 
     private Object code;

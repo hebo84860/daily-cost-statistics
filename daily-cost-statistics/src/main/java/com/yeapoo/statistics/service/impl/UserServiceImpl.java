@@ -1,6 +1,8 @@
 package com.yeapoo.statistics.service.impl;
 
 import com.yeapoo.statistics.constant.ConstantEnum;
+import com.yeapoo.statistics.constant.Status;
+import com.yeapoo.statistics.constant.UserRole;
 import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.mapper.UserEntityMapper;
 import com.yeapoo.statistics.service.IUserService;
@@ -25,13 +27,42 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	public boolean addUser(UserEntity user) {
-		user.setStatus(ConstantEnum.USER_STATUS_0.getCodeByte());
+		UserEntity recommendUser = this.getUserEntityByUserName(user.getRecommendUsername());
+		if (!"admin".equals(user.getUsername())) {
+			if (recommendUser==null){
+                return false;
+            }else {
+                user.setRecommendFirstId(recommendUser.getId());
+                user.setRecommendFirstName(recommendUser.getRecommendFirstName());
+                user.setRecommendSecondId(recommendUser.getRecommendFirstId());
+                user.setRecommendSecondName(recommendUser.getRecommendFirstName());
+				user.setBelongSalesmanId(recommendUser.getBelongSalesmanId());
+				user.setBelongFirstDistributionId(recommendUser.getBelongFirstDistributionId());
+				if (UserRole.ADMIN.equals(recommendUser.getUserRole())){
+					user.setUserRole(UserRole.FIRST_DISTRIBUTION);
+				}else if (UserRole.FIRST_DISTRIBUTION.equals(recommendUser.getUserRole())){
+					user.setUserRole(UserRole.SECOND_DISTRIBUTION);
+                }else if (UserRole.SECOND_DISTRIBUTION.equals(recommendUser.getUserRole())){
+                    user.setUserRole(UserRole.THIRD_DISTRIBUTION);
+					user.setBelongFirstDistributionId(user.getId());
+                }else if (UserRole.THIRD_DISTRIBUTION.equals(recommendUser.getUserRole())){
+                    user.setUserRole(UserRole.THIRD_DISTRIBUTION);
+					user.setBelongFirstDistributionId(user.getBelongFirstDistributionId());
+					user.setBelongSecondDistribution(user.getBelongSecondDistribution());
+                }else {
+                    user.setUserRole(UserRole.ADMIN);
+                }
+            }
+		}else {
+			user.setUserRole(UserRole.ADMIN);
+		}
+		user.setStatus(Status.CHECK_PENDING);
 		user.setCreateTime(new Date());
 		user.setUpdateTime(new Date());
 		if (StringUtils.isNotBlank(user.getPassword())){
 			user.setPassword(passwordEncoder.encodePassword(user.getPassword(), user.getUsername()));
 		}
-		return mapper.insert(user)==1;
+		return mapper.insertSelective(user)==1;
 	}
 
 	public boolean updateUser(UserEntity user) {

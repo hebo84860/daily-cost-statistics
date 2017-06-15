@@ -101,6 +101,8 @@ public class UserController {
 			UserEntity userEntity = userService.getUserEntityByUserName(username);
 			if (userEntity!=null){
 				baseSingleResponse.setCode(CodeEnum.ACCOUNT_EXIST);
+			}else {
+				baseSingleResponse.setCode(CodeEnum.ACCOUNT_NOT_EXIST);
 			}
 		} catch (Exception e) {
 			baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
@@ -160,6 +162,9 @@ public class UserController {
 		UserEntity user = new UserEntity();
 		user.setUsername(paramsMap.get("username").toString());
 		user.setPassword(paramsMap.get("password").toString());
+		user.setPhone(paramsMap.get("phone") + "");
+		user.setRecommendUsername(paramsMap.get("recommendUsername") + "");
+//		user.setRecommendFirstId(Integer.valueOf(paramsMap.get("recommendFirstId")+""));
 		if (paramsMap.containsKey("email"))
 			user.setEmail(paramsMap.get("email").toString());
 		if (paramsMap.containsKey("realname"))

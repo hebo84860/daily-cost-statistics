@@ -1,9 +1,13 @@
 package com.yeapoo.statistics.entity;
 
+import com.yeapoo.statistics.constant.Status;
+import com.yeapoo.statistics.constant.UserRole;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class UserEntity implements Serializable {
+public class UserEntity implements Serializable{
+    private static final long serialVersionUID = 6946565290744560733L;
     private Integer id;
 
     private String username;
@@ -11,16 +15,31 @@ public class UserEntity implements Serializable {
     private String realname;
 
     private String password;
-
-    private String email;
+    private String recommendUsername;
 
     private String phone;
 
-    private Byte role;
+    private String email;
+
+    private UserRole userRole;
+
+    private Integer recommendFirstId;
+
+    private String recommendFirstName;
+
+    private Integer recommendSecondId;
+
+    private String recommendSecondName;
+
+    private Integer belongSalesmanId;
+
+    private Integer belongFirstDistributionId;
+
+    private Integer belongSecondDistribution;
 
     private String job;
 
-    private Byte status;
+    private Status status;
 
     private Date createTime;
 
@@ -31,8 +50,6 @@ public class UserEntity implements Serializable {
     private Byte updateUser;
 
     private Boolean enabled;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -47,7 +64,15 @@ public class UserEntity implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+        this.username = username;
+    }
+
+    public String getRecommendUsername() {
+        return recommendUsername;
+    }
+
+    public void setRecommendUsername(String recommendUsername) {
+        this.recommendUsername = recommendUsername;
     }
 
     public String getRealname() {
@@ -55,7 +80,7 @@ public class UserEntity implements Serializable {
     }
 
     public void setRealname(String realname) {
-        this.realname = realname == null ? null : realname.trim();
+        this.realname = realname;
     }
 
     public String getPassword() {
@@ -63,15 +88,7 @@ public class UserEntity implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+        this.password = password;
     }
 
     public String getPhone() {
@@ -79,15 +96,87 @@ public class UserEntity implements Serializable {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+        this.phone = phone;
     }
 
-    public Byte getRole() {
-        return role;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRole(Byte role) {
-        this.role = role;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public Integer getRecommendFirstId() {
+        return recommendFirstId;
+    }
+
+    public void setRecommendFirstId(Integer recommendFirstId) {
+        this.recommendFirstId = recommendFirstId;
+    }
+
+    public String getRecommendFirstName() {
+        return recommendFirstName;
+    }
+
+    public void setRecommendFirstName(String recommendFirstName) {
+        this.recommendFirstName = recommendFirstName;
+    }
+
+    public Integer getRecommendSecondId() {
+        return recommendSecondId;
+    }
+
+    public void setRecommendSecondId(Integer recommendSecondId) {
+        this.recommendSecondId = recommendSecondId;
+    }
+
+    public String getRecommendSecondName() {
+        return recommendSecondName;
+    }
+
+    public void setRecommendSecondName(String recommendSecondName) {
+        this.recommendSecondName = recommendSecondName;
+    }
+
+    public Integer getBelongSalesmanId() {
+        return belongSalesmanId;
+    }
+
+    public void setBelongSalesmanId(Integer belongSalesmanId) {
+        this.belongSalesmanId = belongSalesmanId;
+    }
+
+    public Integer getBelongFirstDistributionId() {
+        return belongFirstDistributionId;
+    }
+
+    public void setBelongFirstDistributionId(Integer belongFirstDistributionId) {
+        this.belongFirstDistributionId = belongFirstDistributionId;
+    }
+
+    public Integer getBelongSecondDistribution() {
+        return belongSecondDistribution;
+    }
+
+    public void setBelongSecondDistribution(Integer belongSecondDistribution) {
+        this.belongSecondDistribution = belongSecondDistribution;
     }
 
     public String getJob() {
@@ -95,15 +184,7 @@ public class UserEntity implements Serializable {
     }
 
     public void setJob(String job) {
-        this.job = job == null ? null : job.trim();
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
+        this.job = job;
     }
 
     public Date getCreateTime() {

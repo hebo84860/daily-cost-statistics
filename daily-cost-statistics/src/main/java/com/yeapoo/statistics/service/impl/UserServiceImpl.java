@@ -1,17 +1,25 @@
 package com.yeapoo.statistics.service.impl;
 
-import com.yeapoo.statistics.constant.ConstantEnum;
 import com.yeapoo.statistics.constant.Status;
 import com.yeapoo.statistics.constant.UserRole;
+import com.yeapoo.statistics.controller.base.BaseListResponse;
+import com.yeapoo.statistics.controller.base.BaseQueryRequest;
+import com.yeapoo.statistics.controller.base.Pagination;
+import com.yeapoo.statistics.controller.param.UserEntityRequest;
+import com.yeapoo.statistics.controller.vo.cost.CostListVO;
+import com.yeapoo.statistics.controller.vo.cost.UserListVO;
 import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.mapper.UserEntityMapper;
 import com.yeapoo.statistics.service.IUserService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service("iUserService")
 public class UserServiceImpl implements IUserService {
@@ -22,7 +30,31 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private Md5PasswordEncoder passwordEncoder;
 
-	public UserEntity getUserEntityByUserName(String username) {
+
+    @Override
+    public BaseListResponse<UserListVO> queryUserList(BaseQueryRequest<UserEntityRequest> queryRequest) {
+        BaseListResponse<UserListVO> baseListResponse = new BaseListResponse<UserListVO>();
+        try {
+            List<UserEntity> userEntities = mapper.queryUserList(queryRequest);
+            List<UserListVO> userListVOs = new ArrayList<UserListVO>();
+            if (CollectionUtils.isNotEmpty(userEntities)){
+                for (UserEntity userEntity : userEntities) {
+                    userListVOs.add(new UserListVO(userEntity));
+                }
+            }
+            Integer count = mapper.countUser(queryRequest);
+            Pagination pagination = queryRequest.getPagination();
+            pagination.countRecords(count);
+            pagination.setRecords(count);
+            baseListResponse.setPagination(pagination);
+            baseListResponse.setResults(userListVOs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return baseListResponse;
+    }
+
+    public UserEntity getUserEntityByUserName(String username) {
 		return mapper.getUserEntityByUserName(username);
 	}
 

@@ -245,7 +245,47 @@
   </update>
 
   <select id="getUserEntityByUserName" parameterType="string" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"/> FROM tb_user
+    SELECT <include refid="Base_Column_List"/> FROM hlh_user
     WHERE username=#{username} AND status='VALID';
   </select>
+
+  <!-- 分页查询 消费记录 -->
+  <select id="queryUserList" parameterType="com.yeapoo.statistics.controller.base.BaseQueryRequest" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM hlh_user
+    <where>
+      <include refid="Base_Where_Condition"/>
+    </where>
+    ORDER BY create_time DESC
+    <if test="pagination!=null">
+      limit #{pagination.stratRecodes}, #{pagination.rows}
+    </if>
+  </select>
+  <select id="countUser" parameterType="com.yeapoo.statistics.controller.base.BaseQueryRequest" resultType="int">
+    SELECT COUNT(1)
+    FROM hlh_user
+    <where>
+      <include refid="Base_Where_Condition"/>
+    </where>
+  </select>
+
+    <sql id="Base_Where_Condition">
+        <if test="condition != null">
+            <if test="condition.id!=null and condition.id!=''">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.status!=null and condition.status!=''">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.createUser!=null and condition.createUser!=''">
+                AND create_user = #{condition.createUser}
+            </if>
+            <!--<if test="condition.costTimeStart!=null and condition.costTimeStart!=''">
+                AND cost_time &gt;= #{condition.costTimeStart}
+            </if>
+            <if test="condition.costTimeEnd!=null and condition.costTimeEnd!=''">
+                AND cost_time &lt;= #{condition.costTimeEnd}
+            </if>-->
+        </if>
+    </sql>
 </mapper>

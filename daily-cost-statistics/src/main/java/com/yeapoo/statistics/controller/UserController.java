@@ -2,8 +2,13 @@ package com.yeapoo.statistics.controller;
 
 import com.yeapoo.statistics.constant.CodeEnum;
 import com.yeapoo.statistics.constant.ConstantEnum;
+import com.yeapoo.statistics.constant.Status;
+import com.yeapoo.statistics.controller.base.BaseListResponse;
+import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.param.UpdatePasswordParam;
+import com.yeapoo.statistics.controller.param.UserEntityRequest;
+import com.yeapoo.statistics.controller.vo.cost.UserListVO;
 import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.service.IUserService;
 import com.yeapoo.statistics.util.JsonUtil;
@@ -29,6 +34,40 @@ public class UserController {
 
 	@Autowired
 	private IUserService userService;
+
+	@RequestMapping("/toUserList")
+	public String toUserList(Model model){
+
+		model.addAttribute("statusEnum", Status.values());
+
+		return "user/user_list";
+	}
+
+	@ResponseBody
+	@RequestMapping("/ajaxQueryUserList")
+	public BaseListResponse<UserListVO> ajaxQueryUserList(HttpServletRequest request, UserEntityRequest userEntityRequest){
+		BaseListResponse<UserListVO> baseListResponse = new BaseListResponse<UserListVO>();
+		logger.info("ajaxQueryUserList start params = {} ", userEntityRequest);
+		try {
+			UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+			if (user==null){
+				baseListResponse.setCode(CodeEnum.LOGIN_ERROR);
+				baseListResponse.setMessage(CodeEnum.LOGIN_ERROR.getValueStr());
+				return baseListResponse;
+			}
+//			if (!ConstantEnum.SUPER_ADMIN.getValueStr().equals(user.getJob())){
+//				cuserListParam.setCreateBy(user.getUsername());
+//			}
+			BaseQueryRequest<UserEntityRequest> queryRequest =
+					new BaseQueryRequest<UserEntityRequest>(userEntityRequest.getPagination(), userEntityRequest);
+			baseListResponse = userService.queryUserList(queryRequest);
+		} catch (Exception e) {
+			baseListResponse.setCode(CodeEnum.SYSTEM_ERROR);
+			baseListResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
+			e.printStackTrace();
+		}
+		return baseListResponse;
+	}
 
 	/**
 	 * 跳转新增会员页面

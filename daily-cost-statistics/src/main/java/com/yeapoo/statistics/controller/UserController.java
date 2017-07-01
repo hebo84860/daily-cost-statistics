@@ -139,9 +139,9 @@ public class UserController {
 		try {
 			UserEntity userEntity = userService.getUserEntityByUserName(username);
 			if (userEntity!=null){
-				baseSingleResponse.setCode(CodeEnum.ACCOUNT_EXIST);
-			}else {
-				baseSingleResponse.setCode(CodeEnum.ACCOUNT_NOT_EXIST);
+                baseSingleResponse.setMessage(CodeEnum.ACCOUNT_EXIST+"");
+            }else {
+				baseSingleResponse.setMessage(CodeEnum.ACCOUNT_NOT_EXIST+"");
 			}
 		} catch (Exception e) {
 			baseSingleResponse.setCode(CodeEnum.SYSTEM_ERROR);
@@ -180,12 +180,13 @@ public class UserController {
 				return map;
 			}
 			UserEntity paramUser = getUserFromMap(paramsMap);
-			if (userService.addUser(paramUser)){
+            BaseSingleResponse baseSingleResponse = userService.addUser(paramUser);
+			if (baseSingleResponse.isStatus()){
 				map.put("code", CodeEnum.SUCCESS.getCodeInt());
 				map.put("msg", CodeEnum.SUCCESS.getValueStr());
 			}else {
 				map.put("code", CodeEnum.SAVE_FAIL.getCodeInt());
-				map.put("msg", CodeEnum.SAVE_FAIL.getValueStr());
+				map.put("msg", baseSingleResponse.getMessage());
 			}
 
 		} catch (Exception e) {

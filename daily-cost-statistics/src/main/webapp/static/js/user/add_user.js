@@ -10,8 +10,10 @@ $(document).ready(function(){
         var usernameReg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
         var passwordReg = /^[a-zA-Z]\w{5,17}$/;
         if($(this).attr("id")=='username' || $(this).attr("id")=='recommendUsername'){
-            if($(this).val() && usernameReg.test($(this).val()))
-                validUsernameRepeat($("#username").val(), $(this).attr("id"));
+            if($(this).val() && usernameReg.test($(this).val())){
+                var resourceId = $(this).attr("id");
+                validUsernameRepeat($("#"+resourceId).val(), $(this).attr("id"));
+            }
             if(!$(this).val() || !usernameReg.test($(this).val())){
                 $(this).next("span").show();
             }
@@ -127,18 +129,22 @@ function validUsernameRepeat(username, resource){
     }
     $.ajax({
         url : 'ajaxValidUserNameRepeat',
-        type:'post',
+        type: 'get',
+        contentType: 'application/json; charset=utf-8',
         dataType : "json",
         data : {
             username : username
         },
         success: function(data){
-            if(data.status==true && data.code=='ACCOUNT_EXIST' && resource=='username'){
+            if(data.status==true && data.message=='ACCOUNT_EXIST' && resource=='username'){
                 $("#usernameExist").show();
             }
-            if(data.status==true && data.code=='ACCOUNT__NOT_EXIST' && resource=='recommendUsername'){
+            if(data.status==true && data.message=='ACCOUNT_NOT_EXIST' && resource=='recommendUsername'){
                 $("#recommendUsernameNotExist").show();
             }
+        },
+        error: function(){
+
         }
     });
 }

@@ -36,6 +36,10 @@ public class BaseResponse implements Serializable{
         return message;
     }
 
+    public void setErrorMessage(String message) {
+        this.setStatus(false);
+        this.message = message;
+    }
     public void setMessage(String message) {
         this.message = message;
     }
@@ -45,9 +49,6 @@ public class BaseResponse implements Serializable{
     }
 
     public void setCode(CodeEnum code) {
-        if (code !=null && !code.equals(CodeEnum.SUCCESS)) {
-            this.setStatus(false);
-        }
         this.code = code;
     }
 }

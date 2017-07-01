@@ -89,6 +89,7 @@
 			<mvc:exclude-mapping path="/main/login"/>
 			<mvc:exclude-mapping path="/user/toAdd"/>
 			<mvc:exclude-mapping path="/user/addOrUpdate"/>
+			<mvc:exclude-mapping path="/user/ajaxValidUserNameRepeat"/>
 			<bean class="com.yeapoo.statistics.intercept.LoginInterceptor">
 				<property name="loginUrl" value="../main/login"/>
 			</bean>

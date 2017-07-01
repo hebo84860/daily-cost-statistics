@@ -2,6 +2,7 @@ package com.yeapoo.statistics.service;
 
 import com.yeapoo.statistics.controller.base.BaseListResponse;
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
+import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.param.UserEntityRequest;
 import com.yeapoo.statistics.controller.vo.cost.UserListVO;
 import com.yeapoo.statistics.entity.UserEntity;
@@ -20,12 +21,13 @@ public interface IUserService {
 	 * @param username
 	 * @return
 	 */
-	UserEntity getUserEntityByUserName(String username);
+	UserEntity
+    getUserEntityByUserName(String username);
 	/**
 	 * 新增会员用户
 	 * @param user
 	 */
-	boolean addUser(UserEntity user);
+    BaseSingleResponse addUser(UserEntity user);
 	/**
 	 * 新增会员用户
 	 * @param user

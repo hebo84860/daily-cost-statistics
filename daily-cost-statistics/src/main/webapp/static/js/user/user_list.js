@@ -78,6 +78,7 @@ function initGrid() {
                     name : 'createUser',
                     index : 'createUser',
                     align : 'center',
+                    hidden:true,
                     sortable : false
                 },{
                     name : 'updateTimeStr',

@@ -33,9 +33,18 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public BaseListResponse<UserListVO> queryUserList(BaseQueryRequest<UserEntityRequest> queryRequest) {
+    public BaseListResponse<UserListVO> queryUserList(BaseQueryRequest<UserEntityRequest> queryRequest, UserEntity loginUser) {
         BaseListResponse<UserListVO> baseListResponse = new BaseListResponse<UserListVO>();
         try {
+            if (loginUser == null){
+                baseListResponse.setErrorMessage("登录用户为空，请重新登录");
+                return baseListResponse;
+            }
+            if (!UserRole.ADMIN.name().equalsIgnoreCase(loginUser.getUsername())){
+                UserEntityRequest userEntityRequest = queryRequest.getCondition();
+                userEntityRequest.setRecommendFirstId(loginUser.getId());
+                userEntityRequest.setRecommendSecondId(loginUser.getId());
+            }
             List<UserEntity> userEntities = mapper.queryUserList(queryRequest);
             List<UserListVO> userListVOs = new ArrayList<UserListVO>();
             if (CollectionUtils.isNotEmpty(userEntities)){

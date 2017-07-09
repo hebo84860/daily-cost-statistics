@@ -14,7 +14,7 @@ public interface IUserService {
 	 * @param queryRequest
 	 * @return
 	 */
-	BaseListResponse<UserListVO> queryUserList(BaseQueryRequest<UserEntityRequest> queryRequest);
+	BaseListResponse<UserListVO> queryUserList(BaseQueryRequest<UserEntityRequest> queryRequest, UserEntity userEntity);
 	
 	/**
 	 * 根据用户名查找用户

@@ -60,7 +60,7 @@ public class UserController {
 //			}
 			BaseQueryRequest<UserEntityRequest> queryRequest =
 					new BaseQueryRequest<UserEntityRequest>(userEntityRequest.getPagination(), userEntityRequest);
-			baseListResponse = userService.queryUserList(queryRequest);
+			baseListResponse = userService.queryUserList(queryRequest, user);
 		} catch (Exception e) {
 			baseListResponse.setCode(CodeEnum.SYSTEM_ERROR);
 			baseListResponse.setMessage(CodeEnum.SYSTEM_ERROR.getValueStr());

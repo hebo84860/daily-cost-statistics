@@ -20,4 +20,6 @@ public interface UserEntityMapper {
     List<UserEntity> queryUserList(BaseQueryRequest<UserEntityRequest> queryRequest);
 
     Integer countUser(BaseQueryRequest<UserEntityRequest> queryRequest);
+
+    void updateCheckUserByStatus(UserEntity user);
 }

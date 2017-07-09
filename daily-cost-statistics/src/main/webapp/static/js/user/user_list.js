@@ -1,6 +1,6 @@
 $(document).ready(function() {
     initGrid();
-    $("#searchCostList").off().on().click(function(){
+    $("#searchUserList").off().on().click(function(){
         queryUserList();
     });
 
@@ -137,11 +137,15 @@ function initGrid() {
                 //显示设为有效/ 无效链接
                 if(statusStr=="有效"){
                     operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
-                        userId+ "' ,'" + status + "' ,'" + statusStr + "'" + ')" >设为无效</a>'
-                        +" | <a href='javascript:void(0)' onclick='showAddDiv("+id+")' style='color:blue;'>编辑</a>";
-                }else{
+                        userId+ "' ,'" + statusStr + "'" + ')" >设为无效</a>';
+                        // +" | <a href='javascript:void(0)' onclick='showAddDiv("+id+")' style='color:blue;'>编辑</a>";
+                }else if(statusStr=="待审核"){
                     operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
-                        userId+ "' ,'" + status + "' ,'" + statusStr + "'" + ')" >设为有效</a>';
+                        userId+ "' ,'" + statusStr + "'" + ')" >设为有效</a>';
+                }
+                else{
+                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
+                        userId+ "' ,'" + statusStr + "'" + ')" >设为有效</a>';
                 }
 
                 jQuery("#userList").jqGrid('setRowData', id, {operate: operateClick});
@@ -174,26 +178,22 @@ function setDefaultTime() {
 }
 
 
-//修改消费状态
-function modifyCostStatus(id, status, validStatusStr) {
+//修改会员状态
+function modifyuserStatus(id, validStatusStr) {
     if (validStatusStr=="有效") {
-        status = "INVALID";
-        layer.prompt({
-            title: '设为无效，请填写原因。',
-            formType: 2 //prompt风格，支持0-2
-        }, function(reason){
-            ajaxModifyCostStatus(id, status,reason);
-        });
+        layer.confirm("确认将该记录设为无效？",{btn: ['确定','取消'] },
+            function(){
+                ajaxModifyUserStatus(id, validStatusStr);
+            }
+        );
     }else{
-        status = "VALID";
-        /*gnl = */
         layer.confirm("确认将该记录设为有效？",{btn: ['确定','取消'] },
                 function(){
-                    ajaxModifyCostStatus(id, status,'');
-                    //layer.close(gnl);
+                    ajaxModifyUserStatus(id, validStatusStr);
                 }
         );
     }
+
 }
 
 function ajaxModifyCostStatus(id, status,reason){
@@ -205,6 +205,24 @@ function ajaxModifyCostStatus(id, status,reason){
             id:id,
             status : status,
             reason : reason
+        },
+        success: function(data){
+            if(data.status)
+                window.location.reload();
+            else
+                layer.alert(data.message);
+        }
+    });
+}
+
+function ajaxModifyUserStatus(id, validStatusStr){
+    $.ajax({
+        url : 'modifyUserStatus',
+        type:'post',
+        dataType : "json",
+        data : {
+            id:id,
+            status : validStatusStr
         },
         success: function(data){
             if(data.status)

@@ -42,4 +42,10 @@ public interface IUserService {
 	 */
 	boolean isPasswordValid(String rawPass, String un) ;
 
+	/**
+	 * 会员审核
+	 * @param id  编号
+	 * @param status  状态
+     */
+	BaseSingleResponse checkUser(int id, String status);
 }

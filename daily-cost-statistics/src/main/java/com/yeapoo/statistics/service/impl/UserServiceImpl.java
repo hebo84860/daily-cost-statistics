@@ -9,6 +9,7 @@ import com.yeapoo.statistics.controller.base.BaseSingleResponse;
 import com.yeapoo.statistics.controller.base.Pagination;
 import com.yeapoo.statistics.controller.param.UserEntityRequest;
 import com.yeapoo.statistics.controller.vo.cost.UserListVO;
+import com.yeapoo.statistics.entity.CostEntity;
 import com.yeapoo.statistics.entity.UserEntity;
 import com.yeapoo.statistics.mapper.UserEntityMapper;
 import com.yeapoo.statistics.service.IUserService;
@@ -32,7 +33,6 @@ public class UserServiceImpl implements IUserService {
 	private Md5PasswordEncoder passwordEncoder;
 
 
-    @Override
     public BaseListResponse<UserListVO> queryUserList(BaseQueryRequest<UserEntityRequest> queryRequest, UserEntity loginUser) {
         BaseListResponse<UserListVO> baseListResponse = new BaseListResponse<UserListVO>();
         try {
@@ -133,5 +133,26 @@ public class UserServiceImpl implements IUserService {
 		}
 		return result;
 	}
+
+    public BaseSingleResponse checkUser(int id,String status){
+        BaseSingleResponse baseSingleResponse = new BaseSingleResponse();
+        UserEntity user = new UserEntity();
+        user.setId(id);
+        if(status.equals("有效")){
+            user.setStatus(Status.INVALID);
+        }
+        if(status.equals("无效")){
+            user.setStatus(Status.VALID);
+        }
+        if(status.equals("待审核")){
+            user.setStatus(Status.VALID);
+        }
+        if(user!=null){
+            mapper.updateCheckUserByStatus(user);
+        }
+
+        return  baseSingleResponse;
+    }
+
 
 }

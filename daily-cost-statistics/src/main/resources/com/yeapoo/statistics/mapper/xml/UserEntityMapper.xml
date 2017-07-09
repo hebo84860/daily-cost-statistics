@@ -286,7 +286,7 @@
           <if test="condition.recommendFirstId != null" >
             AND  recommend_first_id = #{condition.recommendFirstId,jdbcType=INTEGER},
           </if>
-          <if test="condition.recommendFirstName !=  and condition.recommendFirstName!=''" >
+          <if test="condition.recommendFirstName !=null  and condition.recommendFirstName!=''" >
             AND  recommend_first_name = #{condition.recommendFirstName,jdbcType=VARCHAR},
           </if>
           <if test="condition.recommendSecondId != null" >
@@ -303,4 +303,15 @@
             </if>-->
         </if>
     </sql>
+
+    <!-- 会员审核状态变更 -->
+  <update id="updateCheckUserByStatus" parameterType="com.yeapoo.statistics.entity.UserEntity" >
+    update hlh_user
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

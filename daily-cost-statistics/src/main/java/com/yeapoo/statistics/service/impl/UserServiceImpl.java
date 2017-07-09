@@ -98,6 +98,7 @@ public class UserServiceImpl implements IUserService {
             if (StringUtils.isNotBlank(user.getPassword())){
                 user.setPassword(passwordEncoder.encodePassword(user.getPassword(), user.getUsername()));
             }
+            mapper.insertSelective(user);
         } catch (Exception e) {
             baseSingleResponse.setErrorMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
             e.printStackTrace();

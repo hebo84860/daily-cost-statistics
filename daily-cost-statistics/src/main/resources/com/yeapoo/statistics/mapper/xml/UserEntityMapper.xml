@@ -43,7 +43,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insertSelective" parameterType="com.yeapoo.statistics.entity.UserEntity" >
+  <insert id="insertSelective" parameterType="com.yeapoo.statistics.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
     insert into hlh_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

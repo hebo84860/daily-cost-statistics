@@ -22,6 +22,7 @@ public class UserListVO implements Serializable {
     private String statusStr;
     private String createTimeStr;
     private String updateTimeStr;
+    private Boolean canUpdateStatus = Boolean.FALSE;
 
     public UserListVO(){ }
     public UserListVO(UserEntity userEntity){
@@ -202,6 +203,14 @@ public class UserListVO implements Serializable {
 
     public String getPassword() {
         return userEntity.getPassword();
+    }
+
+    public Boolean getCanUpdateStatus() {
+        return canUpdateStatus;
+    }
+
+    public void setCanUpdateStatus(Boolean canUpdateStatus) {
+        this.canUpdateStatus = canUpdateStatus;
     }
 
     public void setCreateUser(Byte createUser) {

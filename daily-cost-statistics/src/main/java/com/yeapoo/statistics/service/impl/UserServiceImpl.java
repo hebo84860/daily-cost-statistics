@@ -43,13 +43,15 @@ public class UserServiceImpl implements IUserService {
             if (!UserRole.ADMIN.name().equalsIgnoreCase(loginUser.getUsername())){
                 UserEntityRequest userEntityRequest = queryRequest.getCondition();
                 userEntityRequest.setRecommendFirstId(loginUser.getId());
-                userEntityRequest.setRecommendSecondId(loginUser.getId());
+//                userEntityRequest.setRecommendSecondId(loginUse   r.getId());
             }
             List<UserEntity> userEntities = mapper.queryUserList(queryRequest);
             List<UserListVO> userListVOs = new ArrayList<UserListVO>();
             if (CollectionUtils.isNotEmpty(userEntities)){
                 for (UserEntity userEntity : userEntities) {
-                    userListVOs.add(new UserListVO(userEntity));
+                    UserListVO userListVO = new UserListVO(userEntity);
+                    userListVO.setCanUpdateStatus(UserRole.ADMIN.name().equalsIgnoreCase(loginUser.getUsername()));
+                    userListVOs.add(userListVO);
                 }
             }
             Integer count = mapper.countUser(queryRequest);
@@ -134,24 +136,13 @@ public class UserServiceImpl implements IUserService {
 		return result;
 	}
 
-    public BaseSingleResponse checkUser(int id,String status){
+    public BaseSingleResponse checkUser(int id,Status status){
         BaseSingleResponse baseSingleResponse = new BaseSingleResponse();
         UserEntity user = new UserEntity();
         user.setId(id);
-        if(status.equals("有效")){
-            user.setStatus(Status.INVALID);
-        }
-        if(status.equals("无效")){
-            user.setStatus(Status.VALID);
-        }
-        if(status.equals("待审核")){
-            user.setStatus(Status.VALID);
-        }
-        if(user!=null){
-            mapper.updateCheckUserByStatus(user);
-        }
-
-        return  baseSingleResponse;
+		user.setStatus(status);
+		mapper.updateCheckUserByStatus(user);
+		return  baseSingleResponse;
     }
 
 

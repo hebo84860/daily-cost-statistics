@@ -1,5 +1,6 @@
 package com.yeapoo.statistics.service;
 
+import com.yeapoo.statistics.constant.Status;
 import com.yeapoo.statistics.controller.base.BaseListResponse;
 import com.yeapoo.statistics.controller.base.BaseQueryRequest;
 import com.yeapoo.statistics.controller.base.BaseSingleResponse;
@@ -47,5 +48,5 @@ public interface IUserService {
 	 * @param id  编号
 	 * @param status  状态
      */
-	BaseSingleResponse checkUser(int id, String status);
+	BaseSingleResponse checkUser(int id, Status status);
 }

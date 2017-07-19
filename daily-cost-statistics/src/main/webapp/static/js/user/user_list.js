@@ -21,7 +21,7 @@ function initGrid() {
         url : "ajaxQueryUserList",
         datatype : "json",
         mtype : "POST",
-        colNames : ['编号','用户名','真实姓名','手机号','邮箱','用户等级','第一推荐人','第二推荐人','用户状态','创建时间','创建人',"修改时间","修改人","操作"],
+        colNames : ['编号','用户名','真实姓名','手机号','邮箱','用户等级','第一推荐人','第二推荐人','用户状态','创建时间','创建人',"修改时间","修改权限","修改人","操作"],
         colModel : [
             {
                 name : 'id',
@@ -87,6 +87,12 @@ function initGrid() {
                     hidden : true,
                     sortable : false
                 },{
+                    name : 'canUpdateStatus',
+                    index : 'canUpdateStatus',
+                    align : 'center',
+                    hidden : true,
+                    sortable : false
+                },{
                     name : 'updateUser',
                     index : 'updateUser',
                     align : 'center',
@@ -135,20 +141,29 @@ function initGrid() {
                 var status = rowData['status'];
                 var statusStr = rowData['statusStr'];
                 //显示设为有效/ 无效链接
-                if(statusStr=="有效"){
-                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
-                        userId+ "' ,'" + statusStr + "'" + ')" >设为无效</a>';
-                        // +" | <a href='javascript:void(0)' onclick='showAddDiv("+id+")' style='color:blue;'>编辑</a>";
-                }else if(statusStr=="待审核"){
-                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
-                        userId+ "' ,'" + statusStr + "'" + ')" >设为有效</a>';
-                }
-                else{
-                    operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
-                        userId+ "' ,'" + statusStr + "'" + ')" >设为有效</a>';
+                var username = rowData['username'];
+                var canUpdateStatus = rowData['canUpdateStatus'];
+                if (username!='admin' && canUpdateStatus=='true') {
+                    if (statusStr == "有效") {
+                        status = 'INVALID';
+                        operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
+                            userId + "' ,'" + status + "'" + ')" >设为无效</a>';
+                    } else if (statusStr == "待审核") {
+                        status = 'INVALID';
+                        operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
+                            userId + "' ,'" + status + "'" + ')" >审核不通过</a>';
+                        status = 'VALID';
+                        operateClick = operateClick + ' | <a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
+                            userId + "' ,'" + status + "'" + ')" >审核通过</a>';
+                    }
+                    else {
+                        status = 'VALID';
+                        operateClick = '<a href="javascript:void(0)" style="color:blue" onclick="modifyuserStatus(' + "'" +
+                            userId + "' ,'" + status + "'" + ')" >设为有效</a>';
+                    }
+                    jQuery("#userList").jqGrid('setRowData', id, {operate: operateClick});
                 }
 
-                jQuery("#userList").jqGrid('setRowData', id, {operate: operateClick});
             }
         }
     });
@@ -180,7 +195,7 @@ function setDefaultTime() {
 
 //修改会员状态
 function modifyuserStatus(id, validStatusStr) {
-    if (validStatusStr=="有效") {
+    if (validStatusStr=="INVALID") {
         layer.confirm("确认将该记录设为无效？",{btn: ['确定','取消'] },
             function(){
                 ajaxModifyUserStatus(id, validStatusStr);

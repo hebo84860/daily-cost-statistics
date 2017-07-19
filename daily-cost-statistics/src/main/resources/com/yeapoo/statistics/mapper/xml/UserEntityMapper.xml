@@ -281,19 +281,19 @@
                 AND create_user = #{condition.createUser}
             </if>
           <if test="condition.userRole != null and condition.userRole!=''" >
-            AND user_role = #{condition.userRole,jdbcType=VARCHAR},
+            AND user_role = #{condition.userRole,jdbcType=VARCHAR}
           </if>
           <if test="condition.recommendFirstId != null" >
-            AND  recommend_first_id = #{condition.recommendFirstId,jdbcType=INTEGER},
+            AND  (recommend_first_id = #{condition.recommendFirstId,jdbcType=INTEGER} OR recommend_second_id = #{condition.recommendFirstId,jdbcType=INTEGER})
           </if>
           <if test="condition.recommendFirstName !=null  and condition.recommendFirstName!=''" >
             AND  recommend_first_name = #{condition.recommendFirstName,jdbcType=VARCHAR},
           </if>
           <if test="condition.recommendSecondId != null" >
-            AND recommend_second_id = #{condition.recommendSecondId,jdbcType=INTEGER},
+            AND (recommend_second_id = #{condition.recommendSecondId,jdbcType=INTEGER} OR recommend_first_id = #{condition.recommendSecondId,jdbcType=INTEGER})
           </if>
           <if test="condition.recommendSecondName != null and condition.recommendSecondName!=''" >
-            AND recommend_second_name = #{condition.recommendSecondName,jdbcType=VARCHAR},
+            AND recommend_second_name = #{condition.recommendSecondName,jdbcType=VARCHAR}
           </if>
             <!--<if test="condition.costTimeStart!=null and condition.costTimeStart!=''">
                 AND cost_time &gt;= #{condition.costTimeStart}

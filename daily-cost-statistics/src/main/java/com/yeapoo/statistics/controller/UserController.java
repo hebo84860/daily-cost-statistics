@@ -220,8 +220,18 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/modifyUserStatus")
-	public BaseSingleResponse modifyUserStatus(int id, String status){
-		BaseSingleResponse baseSingleResponse = userService.checkUser(id, status);
+	public BaseSingleResponse modifyUserStatus(Integer id, String status){
+		BaseSingleResponse baseSingleResponse = new BaseSingleResponse();
+		try {
+            if (id==null || StringUtils.isBlank(status)){
+                baseSingleResponse.setErrorMessage(CodeEnum.PARAMS_ERROR.getValueStr());
+                return baseSingleResponse;
+            }
+			baseSingleResponse = userService.checkUser(id, Status.valueOf(status));
+		} catch (Exception e) {
+			e.printStackTrace();
+			baseSingleResponse.setErrorMessage(CodeEnum.SYSTEM_ERROR.getValueStr());
+		}
 		return baseSingleResponse;
 	}
 }
